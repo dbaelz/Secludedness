@@ -45,3 +45,6 @@ war/WEB-INF/classes/
 
 # App engine generated #
 war/WEB-INF/appengine-generated/
+
+# Gradle
+.gradle/
