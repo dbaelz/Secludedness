@@ -48,7 +48,7 @@ public class MenuScreen extends AbstractScreen {
 		mTable = new Table(mSkin);
 		mTable.setFillParent(true);
 		mStage.addActor(mTable);
-		mTable.add(startButton).size(300, 60).uniform().spaceBottom(10);
+		mTable.add(startButton).size(100, 30).uniform().spaceBottom(10);
 		
 	}
 	
