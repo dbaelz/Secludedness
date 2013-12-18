@@ -5,13 +5,15 @@ public class Player {
 	private final int mStartPositionY;
 	private int mPositionX;
 	private int mPositionY;
+	private int mHealth;
 	
-	public Player(int positionX, int positionY) {
+	public Player(int positionX, int positionY, int health) {
 		mStartPositionX = positionX;
 		mStartPositionY = positionY;
 		
 		mPositionX = positionX;
 		mPositionY = positionY;
+		mHealth = health;
 	}
 	
 	public int getPositionX() {
@@ -38,8 +40,20 @@ public class Player {
 		this.mPositionY += value;
 	}
 	
-	public void resetToStart() {
+	public void resetPositionToStart() {
 		mPositionX = mStartPositionX;
 		mPositionY = mStartPositionY;
+	}
+
+	public int getHealth() {
+		return mHealth;
+	}
+
+	public void setHealth(int health) {
+		this.mHealth = health;
+	}
+	
+	public void changeHealthBy(int value) {
+		this.mHealth += value;
 	}
 }

@@ -12,7 +12,7 @@ import de.dbaelz.secludedness.level.Player;
 public class InputManager {
 
 	
-	public void updatePlayerPosition(float delta, Level level, Player player) {
+	public void handlePlayerInput(float delta, Level level, Player player) {
 		// TODO: Set controller by controller settings
 		// TODO: Add support for controller
 		
@@ -51,7 +51,13 @@ public class InputManager {
 		}
 		
 		if (xPosition != player.getPositionX() || yPosition != player.getPositionY()) {
-			if (!level.isColliding(xPosition, yPosition)) {
+			if (level.isCollidingWithDamage(xPosition, yPosition)) {
+				player.changeHealthBy(-1);
+				player.setPositionX(xPosition);
+				player.setPositionY(yPosition);
+			} else if (level.isCollidingWithPortal(xPosition, yPosition)) {
+				player.resetPositionToStart();
+			} else if (!level.isCollidingWithForeground(xPosition, yPosition)) {
 				player.setPositionX(xPosition);
 				player.setPositionY(yPosition);
 			}					
