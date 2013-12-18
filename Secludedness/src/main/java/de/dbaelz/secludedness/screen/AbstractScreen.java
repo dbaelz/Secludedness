@@ -42,7 +42,7 @@ public abstract class AbstractScreen implements Screen {
 	public void show() {
 		if (!isLevelScreen()) {
 			Gdx.input.setInputProcessor(mStage);	
-		}		
+		}
 	}
 
 	@Override
