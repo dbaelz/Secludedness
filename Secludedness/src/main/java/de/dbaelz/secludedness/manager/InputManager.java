@@ -131,14 +131,21 @@ public class InputManager implements InputProcessor {
 			if (mLevel.isCollidingWithExit(xPosition, yPosition)) {
 				// TODO Exit level
 			} else if (mLevel.isCollidingWithTrap(xPosition, yPosition)) {
+				// TODO: Only testing. cleaner MVC!
+				mGame.getAudioManager().playSound(SoundFile.TRAP);
+				
 				mPlayer.changeHealthBy(-1);
 				mPlayer.setPositionX(xPosition);
 				mPlayer.setPositionY(yPosition);
 			} else if (mLevel.isCollidingWithPortal(xPosition, yPosition)) {
 				// TODO: Only testing. cleaner MVC!
 				mGame.getAudioManager().playSound(SoundFile.PORTAL);
+				
 				mPlayer.resetPositionToStart();
-			} else if (!mLevel.isCollidingWithForeground(xPosition, yPosition)) {
+			} else if (mLevel.isCollidingWithForeground(xPosition, yPosition)) {
+				// TODO: Only testing. cleaner MVC!
+				mGame.getAudioManager().playSound(SoundFile.COLLISION);
+			} else {
 				mPlayer.setPositionX(xPosition);
 				mPlayer.setPositionY(yPosition);
 			}					
