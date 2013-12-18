@@ -15,6 +15,7 @@ import de.dbaelz.secludedness.MainGame;
 public class StartScreen extends AbstractScreen {
 	private Image mStartImage;
 	private Texture mTexture;
+	
 	public StartScreen(MainGame game) {
 		super(game);		
 	}
@@ -41,7 +42,7 @@ public class StartScreen extends AbstractScreen {
 	
 	@Override
 	public void hide() {
+		dispose();
 		super.hide();
-		mTexture.dispose();
 	}
 }
