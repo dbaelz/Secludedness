@@ -18,7 +18,7 @@ public class Level {
 	private TiledMap mMap;
 	private TiledMapTileLayer mForegroundLayer = null;
 	private TiledMapTileLayer mPortalLayer = null;
-	private TiledMapTileLayer mDamageLayer = null;
+	private TiledMapTileLayer mTrapLayer = null;
 	private TiledMapTileLayer mExitLayer = null;
 	private TiledMapTileLayer mFogLayer = null;
 	private int[] mPlayerCell; 
@@ -46,8 +46,8 @@ public class Level {
 				mForegroundLayer = (TiledMapTileLayer) mapLayers.get(i);
 			} else if (mapLayers.get(i).getName().equals("portal")) {
 				mPortalLayer = (TiledMapTileLayer) mapLayers.get(i);
-			} else if (mapLayers.get(i).getName().equals("damage")) {
-				mDamageLayer = (TiledMapTileLayer) mapLayers.get(i);
+			} else if (mapLayers.get(i).getName().equals("trap")) {
+				mTrapLayer = (TiledMapTileLayer) mapLayers.get(i);
 			} else if (mapLayers.get(i).getName().equals("exit")) {
 				mExitLayer = (TiledMapTileLayer) mapLayers.get(i);
 			} else if (mapLayers.get(i).getName().equals("fog")) {
@@ -73,8 +73,8 @@ public class Level {
 		if (mPortalLayer == null) {
 			mPortalLayer = new TiledMapTileLayer(mForegroundLayer.getWidth(), mForegroundLayer.getHeight(), TILE_SIZE, TILE_SIZE);
 		}
-		if (mDamageLayer == null) {
-			mDamageLayer = new TiledMapTileLayer(mForegroundLayer.getWidth(), mForegroundLayer.getHeight(), TILE_SIZE, TILE_SIZE);
+		if (mTrapLayer == null) {
+			mTrapLayer = new TiledMapTileLayer(mForegroundLayer.getWidth(), mForegroundLayer.getHeight(), TILE_SIZE, TILE_SIZE);
 		}
 		if (mFogLayer == null) {
 			mFogLayer = new TiledMapTileLayer(mForegroundLayer.getWidth(), mForegroundLayer.getHeight(), TILE_SIZE, TILE_SIZE);
@@ -132,8 +132,8 @@ public class Level {
 		return checkCollidingWithLayer(mPortalLayer, xPosition, yPosition, false);
 	}
 	
-	public boolean isCollidingWithDamage(float xPosition, float yPosition) {
-		return checkCollidingWithLayer(mDamageLayer, xPosition, yPosition, false);
+	public boolean isCollidingWithTrap(float xPosition, float yPosition) {
+		return checkCollidingWithLayer(mTrapLayer, xPosition, yPosition, false);
 	}
 
 	public boolean isCollidingWithExit(float xPosition, float yPosition) {
