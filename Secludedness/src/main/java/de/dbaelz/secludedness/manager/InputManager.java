@@ -122,6 +122,8 @@ public class InputManager implements InputProcessor {
 	
 	private void handlePlayer(int xPosition, int yPosition) {
 		if (xPosition != mPlayer.getPositionX() || yPosition != mPlayer.getPositionY()) {
+			mLevel.removeFog(xPosition, yPosition);
+			
 			if (mLevel.isCollidingWithExit(xPosition, yPosition)) {
 				// TODO Exit level
 			} else if (mLevel.isCollidingWithDamage(xPosition, yPosition)) {

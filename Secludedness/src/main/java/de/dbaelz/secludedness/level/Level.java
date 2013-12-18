@@ -20,6 +20,7 @@ public class Level {
 	private TiledMapTileLayer mPortalLayer = null;
 	private TiledMapTileLayer mDamageLayer = null;
 	private TiledMapTileLayer mExitLayer = null;
+	private TiledMapTileLayer mFogLayer = null;
 	private int[] mPlayerCell; 
 	private int mPlayerStartHealth;
 
@@ -49,6 +50,8 @@ public class Level {
 				mDamageLayer = (TiledMapTileLayer) mapLayers.get(i);
 			} else if (mapLayers.get(i).getName().equals("exit")) {
 				mExitLayer = (TiledMapTileLayer) mapLayers.get(i);
+			} else if (mapLayers.get(i).getName().equals("fog")) {
+				mFogLayer = (TiledMapTileLayer) mapLayers.get(i);
 			} else if (mapLayers.get(i).getName().equals("player")) {
 				setPlayerStartInformation(mapLayers.get(i).getObjects());
 			}
@@ -73,6 +76,9 @@ public class Level {
 		if (mDamageLayer == null) {
 			mDamageLayer = new TiledMapTileLayer(mForegroundLayer.getWidth(), mForegroundLayer.getHeight(), TILE_SIZE, TILE_SIZE);
 		}
+		if (mFogLayer == null) {
+			mFogLayer = new TiledMapTileLayer(mForegroundLayer.getWidth(), mForegroundLayer.getHeight(), TILE_SIZE, TILE_SIZE);
+		}
 	}
 	
 	private void setPlayerStartInformation(MapObjects mapObjects) {
@@ -90,6 +96,11 @@ public class Level {
 			mPlayerStartHealth = Integer.parseInt(healthProperty);
 		} else {
 			mPlayerStartHealth = 10;
+		}
+		
+		// Remove fog on start position
+		if (mFogLayer != null) {
+			removeFog(mPlayerCell[0], mPlayerCell[1]);
 		}
 	}
 
@@ -122,11 +133,15 @@ public class Level {
 	}
 	
 	public boolean isCollidingWithDamage(float xPosition, float yPosition) {
-		return checkCollidingWithLayer(mDamageLayer, xPosition, yPosition, true);
+		return checkCollidingWithLayer(mDamageLayer, xPosition, yPosition, false);
 	}
 
 	public boolean isCollidingWithExit(float xPosition, float yPosition) {
 		return checkCollidingWithLayer(mExitLayer, xPosition, yPosition, false);
+	}
+	
+	public boolean removeFog(float xPosition, float yPosition) {
+		return checkCollidingWithLayer(mFogLayer, xPosition, yPosition, true);
 	}
 	
 	private boolean checkCollidingWithLayer(TiledMapTileLayer layer, float xPosition, float yPosition, boolean remove) {

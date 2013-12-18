@@ -26,6 +26,11 @@
    eJxjYBgZgI2GZgMAA2wABw==
   </data>
  </layer>
+ <layer name="fog" width="9" height="9">
+  <data encoding="base64" compression="zlib">
+   eJxjZ2BgYB/FFGEAbI8COA==
+  </data>
+ </layer>
  <objectgroup name="player" width="9" height="9">
   <object name="startpoint" x="256" y="256" width="64" height="64">
    <properties>
