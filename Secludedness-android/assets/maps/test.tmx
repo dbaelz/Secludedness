@@ -11,7 +11,21 @@
    eJxjYCAOMJMoTox5MEwJoNQcavgLABR8AB8=
   </data>
  </layer>
+ <layer name="portal" width="9" height="9">
+  <data encoding="base64" compression="zlib">
+   eJxjYCAdsJChZzgDAAWEAAU=
+  </data>
+ </layer>
+ <layer name="damage" width="9" height="9">
+  <data encoding="base64" compression="zlib">
+   eJxjZaAeYCVSbLgBABDkABA=
+  </data>
+ </layer>
  <objectgroup name="player" width="9" height="9">
-  <object name="startpoint" x="256" y="256" width="64" height="64"/>
+  <object name="startpoint" x="256" y="256" width="64" height="64">
+   <properties>
+    <property name="health" value="20"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>
