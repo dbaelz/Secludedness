@@ -7,14 +7,18 @@ import com.badlogic.gdx.Input.Orientation;
 import com.badlogic.gdx.Input.Peripheral;
 import com.badlogic.gdx.InputProcessor;
 
+import de.dbaelz.secludedness.MainGame;
 import de.dbaelz.secludedness.level.Level;
 import de.dbaelz.secludedness.level.Player;
+import de.dbaelz.secludedness.manager.AudioManager.SoundFile;
 
 public class InputManager implements InputProcessor {
+	private MainGame mGame;
 	private Level mLevel;
 	private Player mPlayer;
 	
-	public InputManager(Level level, Player player) {
+	public InputManager(MainGame game, Level level, Player player) {
+		mGame = game;
 		mLevel = level;
 		mPlayer = player;
 	}
@@ -126,11 +130,13 @@ public class InputManager implements InputProcessor {
 			
 			if (mLevel.isCollidingWithExit(xPosition, yPosition)) {
 				// TODO Exit level
-			} else if (mLevel.isCollidingWithDamage(xPosition, yPosition)) {
+			} else if (mLevel.isCollidingWithTrap(xPosition, yPosition)) {
 				mPlayer.changeHealthBy(-1);
 				mPlayer.setPositionX(xPosition);
 				mPlayer.setPositionY(yPosition);
 			} else if (mLevel.isCollidingWithPortal(xPosition, yPosition)) {
+				// TODO: Only testing. cleaner MVC!
+				mGame.getAudioManager().playSound(SoundFile.PORTAL);
 				mPlayer.resetPositionToStart();
 			} else if (!mLevel.isCollidingWithForeground(xPosition, yPosition)) {
 				mPlayer.setPositionX(xPosition);

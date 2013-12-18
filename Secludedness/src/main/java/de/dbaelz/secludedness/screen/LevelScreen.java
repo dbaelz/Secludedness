@@ -75,7 +75,7 @@ public class LevelScreen extends AbstractScreen {
 		} else {
 			usePolling = false;						
 		}
-		mInputManager = new InputManager(mLevel, mPlayer);
+		mInputManager = new InputManager(mGame, mLevel, mPlayer);
 		Gdx.input.setInputProcessor(mInputManager);
 	}
 	
