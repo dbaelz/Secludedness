@@ -22,24 +22,27 @@ public abstract class AbstractScreen implements Screen {
 	
 	@Override
 	public void render(float delta) {
-		mStage.act(delta);
-		
-		Gdx.gl.glClearColor(0.98f, 0.98f, 0.98f, 1.0f);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		
-		mStage.draw();
-		
+		if (isLevelScreen()) {
+			Gdx.gl.glClearColor(0.98f, 0.98f, 0.98f, 1.0f);
+			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);									
+		} else {
+			mStage.act(delta);			
+			Gdx.gl.glClearColor(0.98f, 0.98f, 0.98f, 1.0f);
+			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);			
+			mStage.draw();	
+		}
 	}
 
 	@Override
 	public void resize(int width, int height) {
-		// TODO Auto-generated method stub
-		
+		mStage.setViewport(400, 300, true);
 	}
 
 	@Override
 	public void show() {
-		Gdx.input.setInputProcessor(mStage);
+		if (!isLevelScreen()) {
+			Gdx.input.setInputProcessor(mStage);	
+		}		
 	}
 
 	@Override
