@@ -19,8 +19,11 @@ public class Level {
 	private TiledMapTileLayer mForegroundLayer = null;
 	private TiledMapTileLayer mPortalLayer = null;
 	private TiledMapTileLayer mDamageLayer = null;
+	private TiledMapTileLayer mExitLayer = null;
 	private int[] mPlayerCell; 
 	private int mPlayerStartHealth;
+
+
 	
 	public Level(String mapName) {
 		loadMap(mapName);
@@ -44,6 +47,8 @@ public class Level {
 				mPortalLayer = (TiledMapTileLayer) mapLayers.get(i);
 			} else if (mapLayers.get(i).getName().equals("damage")) {
 				mDamageLayer = (TiledMapTileLayer) mapLayers.get(i);
+			} else if (mapLayers.get(i).getName().equals("exit")) {
+				mExitLayer = (TiledMapTileLayer) mapLayers.get(i);
 			} else if (mapLayers.get(i).getName().equals("player")) {
 				setPlayerStartInformation(mapLayers.get(i).getObjects());
 			}
@@ -55,6 +60,10 @@ public class Level {
 		
 		if (mForegroundLayer.getTileHeight() != TILE_SIZE || mForegroundLayer.getTileWidth() != TILE_SIZE) {
 			throw new GdxRuntimeException("Invalid map: Tile size must be 64x64!");
+		}
+		
+		if (mExitLayer == null) {
+			throw new GdxRuntimeException("Invalid map: No exit found!");
 		}
 
 		// Create empty layers, if no layers defined 
@@ -105,19 +114,28 @@ public class Level {
 				|| (yPosition / TILE_SIZE) >= mForegroundLayer.getHeight() || (yPosition / TILE_SIZE) < 0) {
 			return true;
 		}
-		return checkCollidingWithLayer(mForegroundLayer, xPosition, yPosition);
+		return checkCollidingWithLayer(mForegroundLayer, xPosition, yPosition, false);
 	}
 	
 	public boolean isCollidingWithPortal(float xPosition, float yPosition) {	
-		return checkCollidingWithLayer(mPortalLayer, xPosition, yPosition);
+		return checkCollidingWithLayer(mPortalLayer, xPosition, yPosition, false);
 	}
 	
 	public boolean isCollidingWithDamage(float xPosition, float yPosition) {
-		return checkCollidingWithLayer(mDamageLayer, xPosition, yPosition);
+		return checkCollidingWithLayer(mDamageLayer, xPosition, yPosition, true);
 	}
 
-	private boolean checkCollidingWithLayer(TiledMapTileLayer layer, float xPosition, float yPosition) {
-		Cell cell = layer.getCell((int) (xPosition / TILE_SIZE), (int) (yPosition / TILE_SIZE));
+	public boolean isCollidingWithExit(float xPosition, float yPosition) {
+		return checkCollidingWithLayer(mExitLayer, xPosition, yPosition, false);
+	}
+	
+	private boolean checkCollidingWithLayer(TiledMapTileLayer layer, float xPosition, float yPosition, boolean remove) {
+		int xCell = (int) (xPosition / TILE_SIZE);
+		int yCell = (int) (yPosition / TILE_SIZE);
+		Cell cell = layer.getCell(xCell, yCell);
+		if (remove){
+			layer.setCell(xCell, yCell, null);
+		}
 		return cell != null && cell.getTile() != null;
 	}
 	
