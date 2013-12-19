@@ -34,9 +34,9 @@ public class Level {
 	private void loadMap(String mapName) {
 		AssetManager assetManager = new AssetManager();
 		assetManager.setLoader(TiledMap.class, new TmxMapLoader(new InternalFileHandleResolver()));
-		assetManager.load("maps/" + mapName + ".tmx", TiledMap.class);
+		assetManager.load(mapName, TiledMap.class);
 		assetManager.finishLoading();
-		mMap = assetManager.get("maps/" + mapName + ".tmx");				
+		mMap = assetManager.get(mapName);				
 	}
 	
 	private void readMap() {

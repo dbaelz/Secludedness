@@ -31,10 +31,10 @@ public class LevelScreen extends AbstractScreen {
 	
 	private boolean usePolling;
 	
-	public LevelScreen(MainGame game, String mapName) {
+	public LevelScreen(MainGame game, boolean isCampaign) {
 		super(game);		
 		mGame = game;
-		mLevel = new Level(mapName);
+		mLevel = new Level(mGame.getLevelManager().getLevelName(isCampaign));
 	}
 
 	@Override

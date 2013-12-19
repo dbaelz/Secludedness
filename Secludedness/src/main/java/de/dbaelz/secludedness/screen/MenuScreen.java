@@ -40,8 +40,7 @@ public class MenuScreen extends AbstractScreen {
 			}
 			
 			private void changeScreen() {
-				// TODO: Debug/Test only: Start always map test
-				mGame.setScreen(new LevelScreen(mGame, "test"));
+				mGame.setScreen(new LevelScreen(mGame, true));
 			}
 		});
 		
