@@ -1,8 +1,15 @@
 package de.dbaelz.secludedness.manager;
 
+import de.dbaelz.secludedness.level.Level;
+
 public class LevelManager {
 	public enum LevelFile {
-		TEST("maps/test.tmx");
+		// Campaign
+		LEVEL1("maps/level1.tmx"),
+		LEVEL2("maps/level2.tmx"),
+		LEVEL3("maps/level3.tmx"),
+				
+		SMALL("maps/small.tmx");
 		
 		private String mLevelFilename;
 		
@@ -15,7 +22,7 @@ public class LevelManager {
 		}
 	}
 	
-	private LevelFile[] mCampaignLevel = { LevelFile.TEST };
+	private LevelFile[] mCampaignLevel = { LevelFile.LEVEL1, LevelFile.LEVEL2, LevelFile.LEVEL3 };
 	private int mNextCampaignLevel = 0;
 	
 	public String getLevelName(boolean campaign) {
@@ -29,8 +36,8 @@ public class LevelManager {
 			}
 			return mCampaignLevel[levelIndex].getFilename();
 		}
-		// TODO: Randomly select a level?!
-		return LevelFile.TEST.getFilename();
+		int random = (int) (Math.random() * (LevelFile.values().length - 0) + 0);
+		return LevelFile.values()[random].getFilename();
 	}
 	
 }
