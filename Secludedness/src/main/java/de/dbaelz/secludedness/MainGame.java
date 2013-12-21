@@ -16,11 +16,9 @@ public class MainGame extends Game {
 	public void create() {
 		setScreen(new StartScreen(this));
 		mAudioManager = new AudioManager();
-		
-		// TODO: For testing/demo purpose only
-		mAudioManager.playMusic(MusicFile.TEMP);
-		
 		mLevelManager = new LevelManager();
+		
+		// TODO: Start intro music
 	}
 	
 	public AudioManager getAudioManager() {
