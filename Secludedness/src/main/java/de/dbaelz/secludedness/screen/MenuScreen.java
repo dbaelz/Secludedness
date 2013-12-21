@@ -31,7 +31,6 @@ public class MenuScreen extends AbstractScreen {
 
 		TextButton playRandomLevel = new TextButton("PLAY RANDOM LEVEL", mSkin);
 		playRandomLevel.addListener(new ClickListener() {
-			// TODO: Fix touch down -> drag out of button -> touch up issue
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				super.touchUp(event, x, y, pointer, button);
@@ -42,12 +41,20 @@ public class MenuScreen extends AbstractScreen {
 
 		TextButton playCampaign = new TextButton("PLAY CAMPAIGN", mSkin);
 		playCampaign.addListener(new ClickListener() {
-			// TODO: Fix touch down -> drag out of button -> touch up issue
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				super.touchUp(event, x, y, pointer, button);
 				
 				mGame.setScreen(new LevelScreen(mGame, true));
+			}
+		});
+		
+		TextButton endGame = new TextButton("END GAME", mSkin);
+		endGame.addListener(new ClickListener() {
+			@Override
+			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+				super.touchUp(event, x, y, pointer, button);				
+				Gdx.app.exit();				 
 			}
 		});
 		
@@ -57,8 +64,8 @@ public class MenuScreen extends AbstractScreen {
 		mTable.add(playRandomLevel).size(180, 30).uniform().spaceBottom(10);
 		mTable.row();
 		mTable.add(playCampaign).size(180, 30).uniform().spaceBottom(10);
-		
-		
+		mTable.row();
+		mTable.add(endGame).size(180, 30).uniform().spaceBottom(10).spaceTop(30);	
 	}
 	
 	@Override
