@@ -23,8 +23,7 @@ public class Level {
 	private TiledMapTileLayer mFogLayer = null;
 	private int[] mPlayerCell; 
 	private int mPlayerStartHealth;
-
-
+	private boolean mLevelFinished;
 	
 	public Level(String mapName) {
 		loadMap(mapName);
@@ -152,6 +151,14 @@ public class Level {
 			layer.setCell(xCell, yCell, null);
 		}
 		return cell != null && cell.getTile() != null;
+	}
+
+	public boolean isFinished() {
+		return mLevelFinished;
+	}
+
+	public void setFinished(boolean levelFinished) {
+		this.mLevelFinished = levelFinished;
 	}
 	
 }

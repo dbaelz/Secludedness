@@ -24,16 +24,17 @@ public class LevelScreen extends AbstractScreen {
 	private TextureRegion mPlayerTexture;
 	private BitmapFont mFont;
 	
-		
 	private SpriteBatch mBatch = new SpriteBatch();
 	private OrthographicCamera mCamera;
 	private OrthogonalTiledMapRenderer mMapRenderer;
 	
-	private boolean usePolling;
+	private boolean mUsePolling;
+	private boolean mIsCampaign;
 	
 	public LevelScreen(MainGame game, boolean isCampaign) {
 		super(game);		
 		mGame = game;
+		mIsCampaign = isCampaign;
 		mLevel = new Level(mGame.getLevelManager().getLevelName(isCampaign));
 	}
 
@@ -71,9 +72,9 @@ public class LevelScreen extends AbstractScreen {
 		
 		// TODO: Change input based on settings
 		if ((Gdx.app.getType() == ApplicationType.Android) && (Gdx.input.isPeripheralAvailable(Peripheral.Accelerometer))) {
-			usePolling = true;
+			mUsePolling = true;
 		} else {
-			usePolling = false;						
+			mUsePolling = false;						
 		}
 		mInputManager = new InputManager(mGame, mLevel, mPlayer);
 		Gdx.input.setInputProcessor(mInputManager);
@@ -96,13 +97,20 @@ public class LevelScreen extends AbstractScreen {
 	}
 
 	private void doGameLogic(float delta){
-		if (usePolling) {
+		if (mUsePolling) {
 			mInputManager.pollPlayerInput(delta, mLevel, mPlayer);	
 		}
 					
-
 		if (mPlayer.getHealth() == 0) {
 			// TODO: GAME OVER!
+		}
+		
+		if (mLevel.isFinished()) {
+			if (mIsCampaign) {
+				mGame.setScreen(new LevelScreen(mGame, true));
+			} else {
+				// TODO: Show nice end screen
+			}
 		}
 	}
 }
