@@ -32,6 +32,13 @@ public class ResultScreen extends AbstractScreen {
 		FileHandle skinFile = Gdx.files.internal( "ui/uiskin.json" );
 		mSkin = new Skin(skinFile);
 
+		Label finishedLabel = new Label("== LEVEL FINISHED ==", mSkin);
+		String result = "You've actually survived!";
+		if (mLevelStatistic.getHealth() == 0) {
+			result = "OOOhhh, you lost!";
+		}
+		Label resultLabel = new Label(result, mSkin);
+		
 		Label movesLabel = new Label("Moves: " + mLevelStatistic.getMoves(), mSkin);
 		Label teleportsLabel = new Label("Teleports: " + mLevelStatistic.getTeleports(), mSkin);
 		Label trapsLabel = new Label("Traps: " + mLevelStatistic.getTraps(), mSkin);
@@ -59,6 +66,10 @@ public class ResultScreen extends AbstractScreen {
 		mTable.setFillParent(true);
 		mStage.addActor(mTable);
 		
+		mTable.add(finishedLabel);
+		mTable.row();
+		mTable.add(resultLabel);
+		mTable.row();
 		mTable.add(movesLabel);
 		mTable.row();
 		mTable.add(teleportsLabel);
