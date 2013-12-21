@@ -22,19 +22,30 @@ public class LevelManager {
 	
 	private LevelFile[] mCampaignLevel = { LevelFile.LEVEL1, LevelFile.LEVEL2, LevelFile.LEVEL3 };
 	private int mNextCampaignLevel = 0;
+	private boolean mCampaignFinished;
 	
 	public String getLevelFilename(boolean campaign) {
-		if (campaign) {
+		if (campaign) {			
 			int levelIndex = mNextCampaignLevel;
 			if (mNextCampaignLevel + 1 < mCampaignLevel.length) {
 				mNextCampaignLevel++;	
 			} else {
+				mCampaignFinished = true;
 				mNextCampaignLevel = 0;
 			}
 			return mCampaignLevel[levelIndex].getFilename();
+		} else {
+			int random = (int) (Math.random() * (LevelFile.values().length - 0) + 0);
+			return LevelFile.values()[random].getFilename();			
 		}
-		int random = (int) (Math.random() * (LevelFile.values().length - 0) + 0);
-		return LevelFile.values()[random].getFilename();
+	}
+
+	public boolean isCampaignFinished() {
+		return mCampaignFinished;
 	}
 	
+	public void restartCampaign() {
+		this.mCampaignFinished = false;
+		mNextCampaignLevel = 0;
+	}
 }

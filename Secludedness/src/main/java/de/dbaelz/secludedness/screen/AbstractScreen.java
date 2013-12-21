@@ -13,7 +13,7 @@ public abstract class AbstractScreen implements Screen {
 
 	public AbstractScreen(MainGame game) {
 		mGame = game;
-		mStage = new Stage(800, 600, true);
+		mStage = new Stage(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
 	}
 
 	public boolean isLevelScreen() {
