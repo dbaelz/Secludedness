@@ -9,6 +9,7 @@ import com.badlogic.gdx.InputProcessor;
 
 import de.dbaelz.secludedness.MainGame;
 import de.dbaelz.secludedness.level.Level;
+import de.dbaelz.secludedness.level.LevelStatistic;
 import de.dbaelz.secludedness.level.Player;
 import de.dbaelz.secludedness.manager.AudioManager.SoundFile;
 
@@ -30,56 +31,52 @@ public class InputManager implements InputProcessor {
 
 	@Override
 	public boolean keyUp(int keycode) {
-		int xPosition = mPlayer.getPositionX();
-		int yPosition = mPlayer.getPositionY();
-		
-		if (keycode == Keys.RIGHT) {
-			xPosition += 64;
-		} else if (keycode == Keys.LEFT) {
-			xPosition -= 64;
-		} else if (keycode == Keys.UP) {
-			yPosition += 64;
-		} else if (keycode == Keys.DOWN) {
-			yPosition -= 64;
+		if (!mLevel.isFinished()) {
+			int xPosition = mPlayer.getPositionX();
+			int yPosition = mPlayer.getPositionY();
+			
+			if (keycode == Keys.RIGHT) {
+				xPosition += 64;
+			} else if (keycode == Keys.LEFT) {
+				xPosition -= 64;
+			} else if (keycode == Keys.UP) {
+				yPosition += 64;
+			} else if (keycode == Keys.DOWN) {
+				yPosition -= 64;
+			}
+			
+			handlePlayer(xPosition, yPosition);
 		}
-		
-		handlePlayer(xPosition, yPosition);
 		return true;
 	}
 
 	@Override
 	public boolean keyTyped(char character) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean mouseMoved(int screenX, int screenY) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean scrolled(int amount) {
-		// TODO Auto-generated method stub
 		return false;
 	}	
 
@@ -126,17 +123,21 @@ public class InputManager implements InputProcessor {
 	
 	private void handlePlayer(int xPosition, int yPosition) {
 		if (xPosition != mPlayer.getPositionX() || yPosition != mPlayer.getPositionY()) {
+			LevelStatistic statistic = mLevel.getLevelStatistic();			
+			statistic.changeMovesBy(1);			
 			mLevel.removeFog(xPosition, yPosition);
 			
 			if (mLevel.isCollidingWithExit(xPosition, yPosition)) {
 				mLevel.setFinished(true);
 			} else if (mLevel.isCollidingWithTrap(xPosition, yPosition)) {
-				mGame.getAudioManager().playSound(SoundFile.TRAP);				
+				mGame.getAudioManager().playSound(SoundFile.TRAP);
+				statistic.changeTrapsBy(1);
 				mPlayer.changeHealthBy(-1);
 				mPlayer.setPositionX(xPosition);
 				mPlayer.setPositionY(yPosition);
-			} else if (mLevel.isCollidingWithPortal(xPosition, yPosition)) {
+			} else if (mLevel.isCollidingWithPortal(xPosition, yPosition)) {				
 				mGame.getAudioManager().playSound(SoundFile.PORTAL);
+				statistic.changeTeleportsBy(1);
 				mPlayer.resetPositionToStart();
 			} else if (mLevel.isCollidingWithForeground(xPosition, yPosition)) {
 				mGame.getAudioManager().playSound(SoundFile.COLLISION);

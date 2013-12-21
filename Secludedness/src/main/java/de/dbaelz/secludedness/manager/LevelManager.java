@@ -1,6 +1,5 @@
 package de.dbaelz.secludedness.manager;
 
-import de.dbaelz.secludedness.level.Level;
 
 public class LevelManager {
 	public enum LevelFile {
@@ -25,13 +24,12 @@ public class LevelManager {
 	private LevelFile[] mCampaignLevel = { LevelFile.LEVEL1, LevelFile.LEVEL2, LevelFile.LEVEL3 };
 	private int mNextCampaignLevel = 0;
 	
-	public String getLevelName(boolean campaign) {
+	public String getLevelFilename(boolean campaign) {
 		if (campaign) {
 			int levelIndex = mNextCampaignLevel;
 			if (mNextCampaignLevel + 1 < mCampaignLevel.length) {
 				mNextCampaignLevel++;	
 			} else {
-				// TODO: End of campaign = restart campaign?
 				mNextCampaignLevel = 0;
 			}
 			return mCampaignLevel[levelIndex].getFilename();

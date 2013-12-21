@@ -24,10 +24,12 @@ public class Level {
 	private int[] mPlayerCell; 
 	private int mPlayerStartHealth;
 	private boolean mLevelFinished;
+	private LevelStatistic mLevelStatistic;
 	
 	public Level(String mapName) {
 		loadMap(mapName);
 		readMap();
+		mLevelStatistic = new LevelStatistic(getPlayerStartHealth(), mapName);
 	}
 	
 	private void loadMap(String mapName) {
@@ -159,6 +161,10 @@ public class Level {
 
 	public void setFinished(boolean levelFinished) {
 		this.mLevelFinished = levelFinished;
+	}
+	
+	public LevelStatistic getLevelStatistic() {
+		return this.mLevelStatistic;
 	}
 	
 }

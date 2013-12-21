@@ -1,7 +1,7 @@
 package de.dbaelz.secludedness.screen;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Application.ApplicationType;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Peripheral;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -27,7 +27,7 @@ public class LevelScreen extends AbstractScreen {
 	private SpriteBatch mBatch = new SpriteBatch();
 	private OrthographicCamera mCamera;
 	private OrthogonalTiledMapRenderer mMapRenderer;
-	
+
 	private boolean mUsePolling;
 	private boolean mIsCampaign;
 	
@@ -35,7 +35,16 @@ public class LevelScreen extends AbstractScreen {
 		super(game);		
 		mGame = game;
 		mIsCampaign = isCampaign;
-		mLevel = new Level(mGame.getLevelManager().getLevelName(isCampaign));
+		mLevel = new Level(mGame.getLevelManager().getLevelFilename(isCampaign));
+		mPlayer = new Player(mLevel.getPlayerCellX(), mLevel.getPlayerCellY(), mLevel.getPlayerStartHealth());
+	}
+	
+	public LevelScreen(MainGame game, boolean isCampaign, String levelFilename) {
+		super(game);		
+		mGame = game;
+		mIsCampaign = isCampaign;
+		mLevel = new Level(levelFilename);
+		mPlayer = new Player(mLevel.getPlayerCellX(), mLevel.getPlayerCellY(), mLevel.getPlayerStartHealth());
 	}
 
 	@Override
@@ -55,15 +64,13 @@ public class LevelScreen extends AbstractScreen {
 		mBatch.begin();
 		mBatch.draw(mPlayerTexture, mPlayer.getPositionX(), mPlayer.getPositionY());
 		// TODO: Debug, remove with nice hud
-		mFont.draw(mBatch, "HEALTH: " + mPlayer.getHealth(), 50, 50);		
+		mFont.draw(mBatch, "HEALTH: " + mPlayer.getHealth(), 50, 50);
 		mBatch.end();		
 	}
 	
 	@Override
 	public void show() {
 		super.show();
-		
-		mPlayer = new Player(mLevel.getPlayerCellX(), mLevel.getPlayerCellY(), mLevel.getPlayerStartHealth());
 		mTexture = new Texture(Gdx.files.internal("textures/texture.png"));
 		mPlayerTexture = new TextureRegion(mTexture, 64, 0, 64, 64);
 		
@@ -97,20 +104,29 @@ public class LevelScreen extends AbstractScreen {
 	}
 
 	private void doGameLogic(float delta){
-		if (mUsePolling) {
+		if (mUsePolling && !mLevel.isFinished()) {
 			mInputManager.pollPlayerInput(delta, mLevel, mPlayer);	
 		}
 					
 		if (mPlayer.getHealth() == 0) {
-			// TODO: GAME OVER!
+			if (mIsCampaign) {
+				mGame.setScreen(new LevelScreen(mGame, true, mLevel.getLevelStatistic().getLevelFilename()));
+			} else {
+				showResultScreen();
+			}
 		}
 		
 		if (mLevel.isFinished()) {
 			if (mIsCampaign) {
 				mGame.setScreen(new LevelScreen(mGame, true));
 			} else {
-				// TODO: Show nice end screen
+				showResultScreen();
 			}
 		}
+	}
+	
+	private void showResultScreen() {
+		mLevel.getLevelStatistic().setHealth(mPlayer.getHealth());
+		mGame.setScreen(new ResultScreen(mGame, mLevel.getLevelStatistic()));
 	}
 }
