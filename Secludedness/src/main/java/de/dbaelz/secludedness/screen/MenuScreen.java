@@ -33,8 +33,7 @@ public class MenuScreen extends AbstractScreen {
 		playRandomLevel.addListener(new ClickListener() {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-				super.touchUp(event, x, y, pointer, button);
-				
+				super.touchUp(event, x, y, pointer, button);				
 				mGame.setScreen(new LevelScreen(mGame, false));
 			}
 		});
@@ -44,7 +43,6 @@ public class MenuScreen extends AbstractScreen {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				super.touchUp(event, x, y, pointer, button);
-				
 				mGame.setScreen(new LevelScreen(mGame, true));
 			}
 		});

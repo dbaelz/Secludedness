@@ -1,6 +1,5 @@
 package de.dbaelz.secludedness.manager;
 
-
 public class LevelManager {
 	public enum LevelFile {
 		// Campaign
