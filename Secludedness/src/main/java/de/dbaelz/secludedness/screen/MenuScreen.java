@@ -29,17 +29,24 @@ public class MenuScreen extends AbstractScreen {
 		FileHandle skinFile = Gdx.files.internal( "ui/uiskin.json" );
 		mSkin = new Skin(skinFile);
 
-		TextButton startButton = new TextButton("START", mSkin);
-		startButton.addListener(new ClickListener() {
+		TextButton playRandomLevel = new TextButton("PLAY RANDOM LEVEL", mSkin);
+		playRandomLevel.addListener(new ClickListener() {
 			// TODO: Fix touch down -> drag out of button -> touch up issue
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				super.touchUp(event, x, y, pointer, button);
 				
-				changeScreen();
+				mGame.setScreen(new LevelScreen(mGame, false));
 			}
-			
-			private void changeScreen() {
+		});
+
+		TextButton playCampaign = new TextButton("PLAY CAMPAIGN", mSkin);
+		playCampaign.addListener(new ClickListener() {
+			// TODO: Fix touch down -> drag out of button -> touch up issue
+			@Override
+			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+				super.touchUp(event, x, y, pointer, button);
+				
 				mGame.setScreen(new LevelScreen(mGame, true));
 			}
 		});
@@ -47,7 +54,10 @@ public class MenuScreen extends AbstractScreen {
 		mTable = new Table(mSkin);
 		mTable.setFillParent(true);
 		mStage.addActor(mTable);
-		mTable.add(startButton).size(100, 30).uniform().spaceBottom(10);
+		mTable.add(playRandomLevel).size(180, 30).uniform().spaceBottom(10);
+		mTable.row();
+		mTable.add(playCampaign).size(180, 30).uniform().spaceBottom(10);
+		
 		
 	}
 	
