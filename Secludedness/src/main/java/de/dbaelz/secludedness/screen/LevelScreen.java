@@ -120,8 +120,9 @@ public class LevelScreen extends AbstractScreen {
 			if (mIsCampaign) {
 				if (mGame.getLevelManager().isCampaignFinished()) {
 					mGame.getLevelManager().restartCampaign();
-					// TODO: Finish Campaign screen
-					mGame.setScreen(new MenuScreen(mGame));
+					
+					mLevel.getLevelStatistic().setHealth(mPlayer.getHealth());
+					mGame.setScreen(new CampaignFinishScreen(mGame, mLevel.getLevelStatistic()));
 				} else {
 					mGame.setScreen(new LevelScreen(mGame, true));	
 				}
