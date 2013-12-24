@@ -71,8 +71,8 @@ public class LevelScreen extends AbstractScreen {
 	@Override
 	public void show() {
 		super.show();
-		mTexture = new Texture(Gdx.files.internal("textures/texture.png"));
-		mPlayerTexture = new TextureRegion(mTexture, 64, 0, 64, 64);
+		mTexture = new Texture(Gdx.files.internal("textures/player.png"));
+		mPlayerTexture = new TextureRegion(mTexture, 0, 0, 64, 64);
 		
 		mFont = new BitmapFont();
 		mFont.setColor(1.0f, 0.5f, 1.0f, 1.0f);
