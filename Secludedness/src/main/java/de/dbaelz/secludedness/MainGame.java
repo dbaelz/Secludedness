@@ -5,12 +5,18 @@ import com.badlogic.gdx.Game;
 
 import de.dbaelz.secludedness.manager.AudioManager;
 import de.dbaelz.secludedness.manager.AudioManager.MusicFile;
+import de.dbaelz.secludedness.manager.GPGSManager;
 import de.dbaelz.secludedness.manager.LevelManager;
 import de.dbaelz.secludedness.screen.StartScreen;
 
 public class MainGame extends Game {
+	private GPGSManager mGPGSManager;
 	private AudioManager mAudioManager;
 	private LevelManager mLevelManager;
+	
+	public MainGame(GPGSManager gpgsManager) {
+		this.mGPGSManager = gpgsManager;
+	}
 	
 	@Override
 	public void create() {

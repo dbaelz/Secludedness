@@ -49,6 +49,8 @@ project(":Secludedness-android") {
         compile "com.badlogicgames.gdx:gdx-backend-android:$gdxVersion"        
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi"
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi-v7a"
+        compile 'com.android.support:appcompat-v7:+'
+        compile 'com.google.android.gms:play-services:4.0.30'
     }
 
     // Signing the APK with the Secludedness.signing property and external config files

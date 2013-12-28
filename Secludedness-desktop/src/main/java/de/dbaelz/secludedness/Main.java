@@ -4,6 +4,7 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
 import de.dbaelz.secludedness.MainGame;
+import de.dbaelz.secludedness.manager.DesktopGPGSManager;
 
 public class Main {
 	public static void main(String[] args) {
@@ -13,6 +14,6 @@ public class Main {
 		cfg.width = 800;
 		cfg.height = 600;
 		
-		new LwjglApplication(new MainGame(), cfg);
+		new LwjglApplication(new MainGame(new DesktopGPGSManager()), cfg);
 	}
 }

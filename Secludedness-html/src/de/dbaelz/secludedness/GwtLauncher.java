@@ -1,6 +1,7 @@
-package de.dbaelz.secludedness.client;
+package de.dbaelz.secludedness;
 
 import de.dbaelz.secludedness.MainGame;
+import de.dbaelz.secludedness.manager.GWTGPGSManager;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.backends.gwt.GwtApplication;
@@ -15,6 +16,6 @@ public class GwtLauncher extends GwtApplication {
 
 	@Override
 	public ApplicationListener getApplicationListener () {
-		return new MainGame();
+		return new MainGame(new GWTGPGSManager());
 	}
 }
