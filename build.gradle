@@ -50,4 +50,10 @@ project(":Secludedness-android") {
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi"
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi-v7a"
     }
+
+    // Signing the APK with the Secludedness.signing property and external config files
+    if (project.hasProperty("Secludedness.signing")
+        && new File(project.property("Secludedness.signing") + "/Secludedness.gradle").exists()) {
+        apply from: project.property("Secludedness.signing") + "/Secludedness.gradle";
+    }
 }
