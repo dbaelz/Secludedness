@@ -29,7 +29,10 @@ public class MenuScreen extends AbstractScreen {
 		FileHandle skinFile = Gdx.files.internal( "ui/uiskin.json" );
 		mSkin = new Skin(skinFile);
 
-		TextButton playRandomLevel = new TextButton("PLAY RANDOM LEVEL", mSkin);
+		final int buttonWidth = 250;
+		final int buttonHeight = 30;
+		
+		final TextButton playRandomLevel = new TextButton("PLAY RANDOM LEVEL", mSkin);
 		playRandomLevel.addListener(new ClickListener() {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
@@ -38,7 +41,7 @@ public class MenuScreen extends AbstractScreen {
 			}
 		});
 
-		TextButton playCampaign = new TextButton("PLAY CAMPAIGN", mSkin);
+		final TextButton playCampaign = new TextButton("PLAY CAMPAIGN", mSkin);
 		playCampaign.addListener(new ClickListener() {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
@@ -47,11 +50,30 @@ public class MenuScreen extends AbstractScreen {
 			}
 		});
 		
-		TextButton endGame = new TextButton("END GAME", mSkin);
-		endGame.addListener(new ClickListener() {
+		final TextButton gpgsSignIn = new TextButton("GOOGLE PLAY GAMES LOGIN", mSkin);
+		gpgsSignIn.addListener(new ClickListener() {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				super.touchUp(event, x, y, pointer, button);				
+					mGame.getGPGSManager().signIn();
+					mTable.removeActor(gpgsSignIn);			
+			}
+		});
+		
+		final TextButton showAchievements = new TextButton("SHOW ACHIEVEMENTS", mSkin);
+		showAchievements.addListener(new ClickListener() {
+			@Override
+			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+				super.touchUp(event, x, y, pointer, button);
+				mGame.getGPGSManager().getAchievements();
+			}
+		});
+		
+		final TextButton endGame = new TextButton("END GAME", mSkin);
+		endGame.addListener(new ClickListener() {
+			@Override
+			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+				super.touchUp(event, x, y, pointer, button);
 				Gdx.app.exit();				 
 			}
 		});
@@ -59,11 +81,17 @@ public class MenuScreen extends AbstractScreen {
 		mTable = new Table(mSkin);
 		mTable.setFillParent(true);
 		mStage.addActor(mTable);
-		mTable.add(playRandomLevel).size(180, 30).uniform().spaceBottom(10);
+		mTable.add(playRandomLevel).size(buttonWidth, buttonHeight).uniform();
 		mTable.row();
-		mTable.add(playCampaign).size(180, 30).uniform().spaceBottom(10);
+		mTable.add(playCampaign).size(buttonWidth, buttonHeight).uniform().spaceTop(10);
 		mTable.row();
-		mTable.add(endGame).size(180, 30).uniform().spaceBottom(10).spaceTop(30);	
+		
+		mTable.add(gpgsSignIn).size(buttonWidth, buttonHeight).uniform().spaceTop(30);
+		mTable.row();
+		mTable.add(showAchievements).size(buttonWidth, buttonHeight).uniform().spaceTop(10);
+				
+		mTable.row();
+		mTable.add(endGame).size(buttonWidth, buttonHeight).uniform().spaceTop(30);	
 	}
 	
 	@Override

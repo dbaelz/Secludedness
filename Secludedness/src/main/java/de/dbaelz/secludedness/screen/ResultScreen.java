@@ -12,6 +12,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import de.dbaelz.secludedness.MainGame;
 import de.dbaelz.secludedness.level.LevelStatistic;
+import de.dbaelz.secludedness.manager.GPGSAchievement;
+import de.dbaelz.secludedness.manager.GPGSManager;
 
 public class ResultScreen extends AbstractScreen {
 	private LevelStatistic mLevelStatistic;
@@ -22,6 +24,7 @@ public class ResultScreen extends AbstractScreen {
 	public ResultScreen(MainGame game, LevelStatistic statistic) {
 		super(game);
 		mLevelStatistic = statistic;
+		manageAchievements();
 	}
 
 	@Override
@@ -88,5 +91,45 @@ public class ResultScreen extends AbstractScreen {
 		super.hide();
 		mAtlas.dispose();
 		mSkin.dispose();
+	}
+	
+	private void manageAchievements() {
+		GPGSManager manager = mGame.getGPGSManager();
+		
+		if (manager.isSignedIn()) {	
+			manager.unlockAchievement(GPGSAchievement.PLAY_RANDOM_LEVEL.getAchievementID());
+			manager.incrementAchievement(GPGSAchievement.FIFTY_RANDOM_LEVELS.getAchievementID(), 1);
+			
+			// Moves
+			if (mLevelStatistic.getMoves() > 0) {
+				manager.incrementAchievement(GPGSAchievement.ONEHUNDRED_MOVES.getAchievementID(), mLevelStatistic.getMoves());
+				manager.incrementAchievement(GPGSAchievement.FIVEHUNDRED_MOVES.getAchievementID(), mLevelStatistic.getMoves());
+				manager.incrementAchievement(GPGSAchievement.THOUSAND_MOVES.getAchievementID(), mLevelStatistic.getMoves());
+			}
+			
+			// Teleports
+			if (mLevelStatistic.getTeleports() > 0) {
+				manager.incrementAchievement(GPGSAchievement.ONEHUNDRED_TELEPORTS.getAchievementID(), mLevelStatistic.getTeleports());
+				manager.incrementAchievement(GPGSAchievement.TWOHUNDRED_TELEPORTS.getAchievementID(), mLevelStatistic.getTeleports());
+				manager.incrementAchievement(GPGSAchievement.THREEHUNDRED_TELEPORTS.getAchievementID(), mLevelStatistic.getTeleports());	
+			}
+	
+			// Damage
+			int damage = Math.abs(mLevelStatistic.getHealth() - mLevelStatistic.getStartHealth());
+			if (damage > 0) {
+				manager.incrementAchievement(GPGSAchievement.ONEHUNDRED_DAMAGE.getAchievementID(), damage);
+				manager.incrementAchievement(GPGSAchievement.TWOHUNDRED_DAMAGE.getAchievementID(), damage);
+				manager.incrementAchievement(GPGSAchievement.THREEHUNDRED_DAMAGE.getAchievementID(), damage);
+			}
+			
+			// Lose or win
+			if (mLevelStatistic.getHealth() == 0) {
+				manager.unlockAchievement(GPGSAchievement.FAIL_LEVEL.getAchievementID());
+				manager.incrementAchievement(GPGSAchievement.LOSE_TWOHUNDRED_LEVELS.getAchievementID(), 1);			
+			} else {
+				manager.unlockAchievement(GPGSAchievement.MASTER_LEVEL.getAchievementID());
+				manager.incrementAchievement(GPGSAchievement.WIN_TWOHUNDRED_LEVELS.getAchievementID(), 1);
+			}
+		}
 	}
 }

@@ -27,6 +27,10 @@ public class MainGame extends Game {
 		// TODO: Start intro music
 	}
 	
+	public GPGSManager getGPGSManager() {
+		return mGPGSManager;
+	}
+	
 	public AudioManager getAudioManager() {
 		return mAudioManager;
 	}

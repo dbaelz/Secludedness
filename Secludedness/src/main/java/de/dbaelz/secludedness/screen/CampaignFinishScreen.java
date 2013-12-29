@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import de.dbaelz.secludedness.MainGame;
 import de.dbaelz.secludedness.level.LevelStatistic;
+import de.dbaelz.secludedness.manager.GPGSManager;
 
 public class CampaignFinishScreen extends AbstractScreen {
 	private LevelStatistic mLevelStatistic;
