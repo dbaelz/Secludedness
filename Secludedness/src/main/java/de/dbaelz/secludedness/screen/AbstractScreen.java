@@ -23,11 +23,11 @@ public abstract class AbstractScreen implements Screen {
 	@Override
 	public void render(float delta) {
 		if (isLevelScreen()) {
-			Gdx.gl.glClearColor(0.98f, 0.98f, 0.98f, 1.0f);
+			Gdx.gl.glClearColor(0.43f, 0.50f, 0.56f, 1.0f);
 			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);									
 		} else {
 			mStage.act(delta);			
-			Gdx.gl.glClearColor(0.98f, 0.98f, 0.98f, 1.0f);
+			Gdx.gl.glClearColor(0.43f, 0.50f, 0.56f, 1.0f);
 			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);			
 			mStage.draw();	
 		}
