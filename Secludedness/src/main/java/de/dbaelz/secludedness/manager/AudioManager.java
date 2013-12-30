@@ -6,6 +6,9 @@ import com.badlogic.gdx.audio.Sound;
 
 public class AudioManager {
 	private Sound mSound;
+	private Sound mCollisionSound;
+	private Sound mPortalSound;
+	private Sound mTrapSound;
 	private Music mMusic;
 	
 	public enum SoundFile {
@@ -39,11 +42,28 @@ public class AudioManager {
 		}
 	}
 	
+	public AudioManager() {
+		mCollisionSound = Gdx.audio.newSound(Gdx.files.internal(SoundFile.COLLISION.getFilename()));
+		mPortalSound = Gdx.audio.newSound(Gdx.files.internal(SoundFile.PORTAL.getFilename()));
+		mTrapSound = Gdx.audio.newSound(Gdx.files.internal(SoundFile.TRAP.getFilename()));
+	}
+	
 	public void playSound(SoundFile file) {
 		mSound = Gdx.audio.newSound(Gdx.files.internal(file.getFilename()));
 		mSound.play(1.0f);
 	}
 
+	public void playCollisionSound() {
+		mCollisionSound.play();
+	}
+	
+	public void playPortalSound() {
+		mPortalSound.play();
+	}
+	
+	public void playTrapSound() {
+		mTrapSound.play();
+	}
 	public void playMusic(MusicFile file) {
 		mMusic = Gdx.audio.newMusic(Gdx.files.internal(file.getFilename()));
 		mMusic.play();
