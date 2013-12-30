@@ -18,6 +18,8 @@ public class InputManager implements InputProcessor {
 	private Level mLevel;
 	private Player mPlayer;
 	
+	private boolean mAccelerometerReadyForPolling;
+	
 	public InputManager(MainGame game, Level level, Player player) {
 		mGame = game;
 		mLevel = level;
@@ -94,17 +96,27 @@ public class InputManager implements InputProcessor {
 				accelY = Gdx.input.getAccelerometerX();
 			}
 
-			float sensibility = 5.0f;
-			if (accelX > sensibility) {
-				xPosition += 64;
-			} else if (accelX < -sensibility) {
-				xPosition -= 64;
-			} else if (accelY > sensibility) {
-				yPosition -= 64;
-			} else if (accelY < -sensibility) {
-				yPosition += 64;
+			float sensibility = 4.0f;
+			if (Math.abs(accelX) <= 1.0f && Math.abs(accelY) <= 1.0f) {
+				mAccelerometerReadyForPolling = true;
+				return;
 			}
-				
+
+			if (mAccelerometerReadyForPolling) {
+				if (accelX > sensibility) {
+					xPosition += 64;
+					mAccelerometerReadyForPolling = false;
+				} else if (accelX < -sensibility) {
+					xPosition -= 64;
+					mAccelerometerReadyForPolling = false;
+				} else if (accelY > sensibility) {
+					yPosition -= 64;
+					mAccelerometerReadyForPolling = false;
+				} else if (accelY < -sensibility) {
+					yPosition += 64;
+					mAccelerometerReadyForPolling = false;
+				}
+			}
 		} else {
 			if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
 				xPosition += 64;
