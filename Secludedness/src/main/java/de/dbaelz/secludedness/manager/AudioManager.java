@@ -82,12 +82,15 @@ public class AudioManager {
 		}
 	}
 	
-	// TODO: Call dispose or change AudioManager
 	public void dispose() {
 		if (mSound != null) {
-			mSound.dispose();
+			mSound.dispose();	
 		}
-
+		
+		mCollisionSound.dispose();
+		mPortalSound.dispose();
+		mTrapSound.dispose();
+		
 		if (mMusic != null) {
 			mMusic.dispose();	
 		}		

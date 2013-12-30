@@ -4,7 +4,6 @@ package de.dbaelz.secludedness;
 import com.badlogic.gdx.Game;
 
 import de.dbaelz.secludedness.manager.AudioManager;
-import de.dbaelz.secludedness.manager.AudioManager.MusicFile;
 import de.dbaelz.secludedness.manager.GPGSManager;
 import de.dbaelz.secludedness.manager.LevelManager;
 import de.dbaelz.secludedness.screen.StartScreen;
@@ -25,6 +24,12 @@ public class MainGame extends Game {
 		mLevelManager = new LevelManager();
 		
 		// TODO: Start intro music
+	}
+	
+	@Override
+	public void dispose() {
+		super.dispose();
+		mAudioManager.dispose();
 	}
 	
 	public GPGSManager getGPGSManager() {
