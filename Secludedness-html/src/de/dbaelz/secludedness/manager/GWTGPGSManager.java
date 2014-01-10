@@ -39,13 +39,13 @@ public class GWTGPGSManager implements GPGSManager {
 	}
 
 	@Override
-	public void submitScore(int score) {
+	public void submitScore(String leaderboardID, int score) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void getLeaderboard() {
+	public void getLeaderboard(String leaderboardID) {
 		// TODO Auto-generated method stub
 		
 	}

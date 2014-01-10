@@ -44,12 +44,13 @@ public class AndroidGPGSManager implements GPGSManager {
 	}
 
 	@Override
-	public void submitScore(int score) {
-		//mGameHelper.getGamesClient().submitScore(LEADERBORD_ID, score);
+	public void submitScore(String leaderboardID, int score) {
+		mGameHelper.getGamesClient().submitScore(leaderboardID, score);
 	}
 
 	@Override
-	public void getLeaderboard() {
+	public void getLeaderboard(String leaderboardID) {
+		mActivity.startActivityForResult(mGameHelper.getGamesClient().getLeaderboardIntent(leaderboardID), 11);
 	}
 
 }

@@ -7,6 +7,6 @@ public interface GPGSManager {
 	public void unlockAchievement(String achievementID);
 	public void incrementAchievement(String achievementID, int steps);
 	public void getAchievements();
-	public void submitScore(int score);
-	public void getLeaderboard();
+	public void submitScore(String leaderboardID, int score);
+	public void getLeaderboard(String leaderboardID);
 }
