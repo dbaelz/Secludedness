@@ -10,6 +10,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import de.dbaelz.secludedness.MainGame;
+import de.dbaelz.secludedness.manager.GPGSLeaderboard;
+import de.dbaelz.secludedness.manager.GPGSManager;
 
 
 public class MenuScreen extends AbstractScreen {
@@ -31,6 +33,8 @@ public class MenuScreen extends AbstractScreen {
 
 		final int buttonWidth = 250;
 		final int buttonHeight = 30;
+		
+		final GPGSManager playManager = mGame.getGPGSManager();
 		
 		final TextButton playRandomLevel = new TextButton("PLAY RANDOM LEVEL", mSkin);
 		playRandomLevel.addListener(new ClickListener() {
@@ -55,8 +59,8 @@ public class MenuScreen extends AbstractScreen {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				super.touchUp(event, x, y, pointer, button);				
-					mGame.getGPGSManager().signIn();
-					mTable.removeActor(gpgsSignIn);			
+				playManager.signIn();
+				mTable.removeActor(gpgsSignIn);			
 			}
 		});
 		
@@ -65,7 +69,16 @@ public class MenuScreen extends AbstractScreen {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				super.touchUp(event, x, y, pointer, button);
-				mGame.getGPGSManager().getAchievements();
+				playManager.getAchievements();
+			}
+		});
+		
+		final TextButton showLeaderboard = new TextButton("SHOW LEADERBOARD", mSkin);
+		showLeaderboard.addListener(new ClickListener() {
+			@Override
+			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+				super.touchUp(event, x, y, pointer, button);
+				mGame.getGPGSManager().getLeaderboard(GPGSLeaderboard.CAMPAIGN_SCORE.getLeaderboardID());
 			}
 		});
 		
@@ -89,6 +102,8 @@ public class MenuScreen extends AbstractScreen {
 		mTable.add(gpgsSignIn).size(buttonWidth, buttonHeight).uniform().spaceTop(30);
 		mTable.row();
 		mTable.add(showAchievements).size(buttonWidth, buttonHeight).uniform().spaceTop(10);
+		mTable.row();
+		mTable.add(showLeaderboard).size(buttonWidth, buttonHeight).uniform().spaceTop(10);
 				
 		mTable.row();
 		mTable.add(endGame).size(buttonWidth, buttonHeight).uniform().spaceTop(30);	
