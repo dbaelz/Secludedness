@@ -35,6 +35,9 @@ public class ResultScreen extends AbstractScreen {
 		FileHandle skinFile = Gdx.files.internal( "ui/uiskin.json" );
 		mSkin = new Skin(skinFile);
 
+		final int buttonWidth = 250;
+		final int buttonHeight = 30;
+		
 		Label finishedLabel = new Label("== LEVEL FINISHED ==", mSkin);
 		String result = "You've actually survived!";
 		if (mLevelStatistic.getHealth() == 0) {
@@ -81,9 +84,9 @@ public class ResultScreen extends AbstractScreen {
 		mTable.row();
 		mTable.add(healthLabel);
 		mTable.row();		
-		mTable.add(repeatLevel).size(180, 30).uniform().spaceBottom(10).spaceTop(30);
+		mTable.add(repeatLevel).size(buttonWidth, buttonHeight).uniform().spaceBottom(10).spaceTop(30);
 		mTable.row();
-		mTable.add(returnMenuScreen).size(180, 30).uniform().spaceBottom(10);
+		mTable.add(returnMenuScreen).size(buttonWidth, buttonHeight).uniform().spaceBottom(10);
 	}
 	
 	@Override

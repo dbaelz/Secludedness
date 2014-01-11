@@ -54,7 +54,7 @@ public class SettingsScreen extends AbstractScreen {
 		
 		final CheckBox musicBox = new CheckBox(" MUSIC", mSkin);
 		musicBox.align(Align.left);
-		musicBox.setChecked(audioManager.isSoundActivated());
+		musicBox.setChecked(audioManager.isMusicActivated());
 		musicBox.addListener(new ClickListener() {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
@@ -62,8 +62,6 @@ public class SettingsScreen extends AbstractScreen {
 				audioManager.setMusicActivated(musicBox.isChecked());
 			}
 		});
-		
-		musicBox.setChecked(audioManager.isMusicActivated());
 		
 		CheckBox controllerBox = new CheckBox(" CONTROLLER", mSkin);
 		controllerBox.align(Align.left);

@@ -34,6 +34,9 @@ public class CampaignFinishScreen extends AbstractScreen {
 		mAtlas = new TextureAtlas(Gdx.files.internal("ui/uiskin.atlas"));
 		FileHandle skinFile = Gdx.files.internal( "ui/uiskin.json" );
 		mSkin = new Skin(skinFile);
+		
+		final int buttonWidth = 250;
+		final int buttonHeight = 30;
 
 		Label finishedLabel = new Label("== CAMPAIGN FINISHED ==", mSkin);
 				
@@ -59,7 +62,7 @@ public class CampaignFinishScreen extends AbstractScreen {
 		mTable.row();
 		mTable.add(tempLabel);
 		mTable.row();
-		mTable.add(returnMenuScreen).size(180, 30).uniform().spaceBottom(30);
+		mTable.add(returnMenuScreen).size(buttonWidth, buttonHeight).uniform().spaceBottom(30);
 	}
 	
 	@Override
