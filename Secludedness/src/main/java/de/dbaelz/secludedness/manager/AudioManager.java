@@ -10,6 +10,8 @@ public class AudioManager {
 	private Sound mPortalSound;
 	private Sound mTrapSound;
 	private Music mMusic;
+	private boolean mSoundActivated = true;
+	private boolean mMusicActivated = true;
 	
 	public enum SoundFile {
 		COLLISION("sounds/collision.ogg"),
@@ -49,36 +51,65 @@ public class AudioManager {
 	}
 	
 	public void playSound(SoundFile file) {
-		mSound = Gdx.audio.newSound(Gdx.files.internal(file.getFilename()));
-		mSound.play(1.0f);
+		if (mSoundActivated) {
+			mSound = Gdx.audio.newSound(Gdx.files.internal(file.getFilename()));
+			mSound.play(1.0f);
+		}
 	}
 
 	public void playCollisionSound() {
-		mCollisionSound.play();
+		if (mSoundActivated) {
+			mCollisionSound.play();
+		}
 	}
 	
 	public void playPortalSound() {
-		mPortalSound.play();
+		if (mSoundActivated) {
+			mPortalSound.play();
+		}
 	}
 	
 	public void playTrapSound() {
-		mTrapSound.play();
+		if (mSoundActivated) {
+			mTrapSound.play();
+		}
 	}
 	public void playMusic(MusicFile file) {
-		mMusic = Gdx.audio.newMusic(Gdx.files.internal(file.getFilename()));
-		mMusic.play();
+		if (mMusicActivated) {
+			mMusic = Gdx.audio.newMusic(Gdx.files.internal(file.getFilename()));
+			mMusic.play();
+		}
 	}
 	
 	public void pauseMusic() {
-		if (mMusic != null || mMusic.isPlaying()) {
+		if (mMusic != null && mMusic.isPlaying()) {
 			mMusic.pause();
 		}
 	}
 	
 	public void stopMusic() {
-		if (mMusic != null || mMusic.isPlaying()) {
+		if (mMusic != null && mMusic.isPlaying()) {
 			mMusic.stop();
 			mMusic.dispose();
+		}
+	}
+	
+	public boolean isSoundActivated() {
+		return mSoundActivated;
+	}
+	
+	public void setSoundActivated(boolean activated) {
+		mSoundActivated = activated;
+	}
+	
+	public boolean isMusicActivated() {
+		return mMusicActivated;
+	}
+	
+	public void setMusicActivated(boolean activated) {
+		mMusicActivated = activated;
+		if (!activated) {
+			stopMusic();
 		}
 	}
 	
