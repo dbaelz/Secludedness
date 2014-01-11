@@ -23,7 +23,9 @@ public enum GPGSAchievement {
 	MASTER_LEVEL("CgkIlaqmzdgQEAIQEA"),
 	
 	WIN_TWOHUNDRED_LEVELS("CgkIlaqmzdgQEAIQEQ"),
-	LOSE_TWOHUNDRED_LEVELS("CgkIlaqmzdgQEAIQEg");
+	LOSE_TWOHUNDRED_LEVELS("CgkIlaqmzdgQEAIQEg"),
+	
+	CONFIGURATOR("CgkIlaqmzdgQEAIQFA");
 	
 	private String mAchievementID;
 	

@@ -79,6 +79,16 @@ public class MenuScreen extends AbstractScreen {
 				mGame.getGPGSManager().getLeaderboard(GPGSLeaderboard.CAMPAIGN_SCORE.getLeaderboardID());
 			}
 		});
+
+		
+		final TextButton settingsMenu = new TextButton("SETTINGS", mSkin);
+		settingsMenu.addListener(new ClickListener() {
+			@Override
+			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+				super.touchUp(event, x, y, pointer, button);
+				mGame.setScreen(new SettingsScreen(mGame));
+			}
+		});
 		
 		final TextButton endGame = new TextButton("END GAME", mSkin);
 		endGame.addListener(new ClickListener() {
@@ -107,7 +117,9 @@ public class MenuScreen extends AbstractScreen {
 		mTable.add(showLeaderboard).size(buttonWidth, buttonHeight).uniform().spaceTop(10);
 				
 		mTable.row();
-		mTable.add(endGame).size(buttonWidth, buttonHeight).uniform().spaceTop(30);	
+		mTable.add(settingsMenu).size(buttonWidth, buttonHeight).uniform().spaceTop(30);
+		mTable.row();
+		mTable.add(endGame).size(buttonWidth, buttonHeight).uniform().spaceTop(10);	
 	}
 	
 	@Override
