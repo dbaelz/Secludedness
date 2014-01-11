@@ -1,60 +1,58 @@
 package de.dbaelz.secludedness.manager;
 
-public class GWTGPGSManager implements GPGSManager {
+import com.badlogic.gdx.Gdx;
 
+public class GWTGPGSManager implements GPGSManager {
+	private final String GPGS_MANAGER = "GPGS MANAGER";
+	
 	@Override
 	public boolean isSignedIn() {
-		// TODO Auto-generated method stub
-		return false;
+		Gdx.app.log(GPGS_MANAGER, "isSignedIn TRUE");
+		return true;
 	}
 
 	@Override
 	public void signIn() {
-		// TODO Auto-generated method stub
-		
+		Gdx.app.log(GPGS_MANAGER, "signIn");
 	}
 
 	@Override
 	public void signOut() {
-		// TODO Auto-generated method stub
-		
+		Gdx.app.log(GPGS_MANAGER, "signOut");
 	}
 	
 	@Override
 	public void unlockAchievement(String achievementID) {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	@Override
-	public void incrementAchievement(String achievementID, int steps) {
-		// TODO Auto-generated method stub
-		
+		Gdx.app.log(GPGS_MANAGER, "UNLOCK ACHIEVEMENT: " + achievementID);
 	}
 
 	@Override
+	public void incrementAchievement(String achievementID, int steps) {
+		Gdx.app.log(GPGS_MANAGER, "INCREMENT ACHIEVEMENT: " + achievementID + " BY " + steps + " STEPS");
+	}
+	
+	@Override
 	public void getAchievements() {
-		// TODO Auto-generated method stub
-		
+		Gdx.app.log(GPGS_MANAGER, "getAchievements");
 	}
 
 	@Override
 	public void submitScore(String leaderboardID, int score) {
-		// TODO Auto-generated method stub
-		
+		Gdx.app.log(GPGS_MANAGER, "Leaderboard " +  leaderboardID + " submit score " + score);
 	}
 
 	@Override
 	public void getLeaderboard(String leaderboardID) {
-		// TODO Auto-generated method stub
-		
+		Gdx.app.log(GPGS_MANAGER, "getLeaderboard " + leaderboardID);
 	}
 
 	@Override
 	public void saveCampaignToCloud(int campaignLevel, int campaignScore) {
+		Gdx.app.log(GPGS_MANAGER, "saveCampaignToCloud: Campaign Level " + campaignLevel + " Campaign Score " + campaignScore);
 	}
 
 	@Override
 	public void loadCampaignFromCloud() {
+		Gdx.app.log(GPGS_MANAGER, "loadCampaignFromCloud");
 	}
 }
