@@ -11,6 +11,6 @@ public interface GPGSManager {
 	public void submitScore(String leaderboardID, int score);
 	public void getLeaderboard(String leaderboardID);
 
-	public void saveCampaignToCloud();
+	public void saveCampaignToCloud(int campaignLevel, int campaignScore);
 	public void loadCampaignFromCloud();
 }

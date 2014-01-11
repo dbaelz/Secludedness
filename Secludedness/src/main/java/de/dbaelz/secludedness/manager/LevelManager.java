@@ -20,11 +20,7 @@ public class LevelManager {
 		}
 	}
 	
-	public String getCurrentCampaignLevel() {
-		// TODO: Restart campaign when finished?
-		if (mCampaignFinished) {
-			restartCampaign();
-		}
+	public String getCurrentCampaignLevelFilename() {
 		return mCampaignLevels[mCurrentCampaignLevel].getFilename();
 	}
 	
@@ -40,5 +36,17 @@ public class LevelManager {
 		mCampaignFinished = false;
 		mCurrentCampaignLevel = 0;
 		mCampaignScore = 0;
+	}
+
+	public int getCurrentCampaignLevel() {
+		return mCurrentCampaignLevel;
+	}
+	
+	public void setCurrentCampaignLevel(int campaignLevel) {
+		mCurrentCampaignLevel = campaignLevel;
+	}
+	
+	public void setCampaignScore(int campaignScore) {
+		mCampaignScore = campaignScore;
 	}
 }

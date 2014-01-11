@@ -123,7 +123,7 @@ public class LevelScreen extends AbstractScreen {
 				if (levelManager.isCampaignFinished()) {					
 					mGame.setScreen(new CampaignFinishScreen(mGame));
 				} else {
-					mGame.setScreen(new LevelScreen(mGame, true, levelManager.getCurrentCampaignLevel()));	
+					mGame.setScreen(new LevelScreen(mGame, true, levelManager.getCurrentCampaignLevelFilename()));	
 				}				
 			} else {
 				showResultScreen();

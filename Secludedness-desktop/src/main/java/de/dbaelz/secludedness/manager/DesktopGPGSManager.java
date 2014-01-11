@@ -49,7 +49,7 @@ public class DesktopGPGSManager implements GPGSManager {
 	}
 
 	@Override
-	public void saveCampaignToCloud() {
+	public void saveCampaignToCloud(int campaignLevel, int campaignScore) {
 	}
 
 	@Override

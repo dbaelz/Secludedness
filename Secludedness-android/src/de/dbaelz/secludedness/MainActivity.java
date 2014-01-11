@@ -14,12 +14,12 @@ import de.dbaelz.secludedness.manager.GPGSManager;
 public class MainActivity extends AndroidApplication implements GameHelperListener {
 	private GameHelper mGameHelper;
 	private GPGSManager mGPGSManager;
+	private MainGame mGame;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);        
         mGameHelper = new GameHelper(this);
-        mGameHelper.setup(this, GameHelper.CLIENT_GAMES | GameHelper.CLIENT_APPSTATE);
 
         mGPGSManager = new AndroidGPGSManager(mGameHelper, this);
         
@@ -28,7 +28,9 @@ public class MainActivity extends AndroidApplication implements GameHelperListen
 		cfg.useWakelock = true;
 		cfg.useAccelerometer = true;
         
-		initialize(new MainGame(mGPGSManager), cfg);
+		mGame = new MainGame(mGPGSManager);
+		initialize(mGame, cfg);
+        mGameHelper.setup(this, GameHelper.CLIENT_GAMES | GameHelper.CLIENT_APPSTATE);
     }
     
     @Override
@@ -40,7 +42,6 @@ public class MainActivity extends AndroidApplication implements GameHelperListen
     @Override
     protected void onStop() {
     	super.onStop();
-        mGPGSManager.saveCampaignToCloud();
     	mGameHelper.onStop();
     }
     
@@ -50,5 +51,9 @@ public class MainActivity extends AndroidApplication implements GameHelperListen
 
 	@Override
 	public void onSignInSucceeded() {
+	}
+	
+	public MainGame getGame() {
+		return mGame;
 	}
 }

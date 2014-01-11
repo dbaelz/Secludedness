@@ -13,6 +13,7 @@ import de.dbaelz.secludedness.MainGame;
 import de.dbaelz.secludedness.manager.GPGSAchievement;
 import de.dbaelz.secludedness.manager.GPGSLeaderboard;
 import de.dbaelz.secludedness.manager.GPGSManager;
+import de.dbaelz.secludedness.manager.LevelManager;
 
 
 public class MenuScreen extends AbstractScreen {
@@ -30,6 +31,7 @@ public class MenuScreen extends AbstractScreen {
 
 		final GPGSManager playManager = mGame.getGPGSManager();
 		playManager.signIn();
+		playManager.loadCampaignFromCloud();
 		
 		mAtlas = new TextureAtlas(Gdx.files.internal("ui/uiskin.atlas"));
 		FileHandle skinFile = Gdx.files.internal( "ui/uiskin.json" );
@@ -53,7 +55,10 @@ public class MenuScreen extends AbstractScreen {
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				super.touchUp(event, x, y, pointer, button);
 				mGame.getGPGSManager().unlockAchievement(GPGSAchievement.BEGIN_CAMPAIGN.getAchievementID());
-				mGame.setScreen(new LevelScreen(mGame, true, mGame.getLevelManager().getCurrentCampaignLevel()));
+				if (mGame.getLevelManager().isCampaignFinished()) {
+					mGame.getLevelManager().restartCampaign();
+				}
+				mGame.setScreen(new LevelScreen(mGame, true, mGame.getLevelManager().getCurrentCampaignLevelFilename()));
 			}
 		});
 				
@@ -80,8 +85,12 @@ public class MenuScreen extends AbstractScreen {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				super.touchUp(event, x, y, pointer, button);
-				hide();
-				Gdx.app.exit();				 
+				LevelManager levelManager = mGame.getLevelManager();
+				if (levelManager.isCampaignFinished()) {
+					levelManager.restartCampaign();
+				}
+				playManager.saveCampaignToCloud(levelManager.getCurrentCampaignLevel(), levelManager.getCampaignScore());
+				Gdx.app.exit();
 			}
 		});
 		
