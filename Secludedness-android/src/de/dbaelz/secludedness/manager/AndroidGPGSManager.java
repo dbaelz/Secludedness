@@ -102,7 +102,7 @@ public class AndroidGPGSManager implements GPGSManager, OnStateLoadedListener {
 			levelManager.setCampaignScore(buffer.getInt());
 			break;		
 		default:
-			levelManager.setCampaignScore(0);
+			levelManager.setCurrentCampaignLevel(0);
 			levelManager.setCampaignScore(0);
 		}
 	}
