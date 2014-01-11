@@ -11,7 +11,6 @@ import de.dbaelz.secludedness.MainGame;
 import de.dbaelz.secludedness.level.Level;
 import de.dbaelz.secludedness.level.LevelStatistic;
 import de.dbaelz.secludedness.level.Player;
-import de.dbaelz.secludedness.manager.AudioManager.SoundFile;
 
 public class InputManager implements InputProcessor {
 	private MainGame mGame;

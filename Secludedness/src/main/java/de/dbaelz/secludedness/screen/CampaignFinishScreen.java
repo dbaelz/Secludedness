@@ -11,18 +11,20 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import de.dbaelz.secludedness.MainGame;
-import de.dbaelz.secludedness.level.LevelStatistic;
+import de.dbaelz.secludedness.manager.GPGSAchievement;
+import de.dbaelz.secludedness.manager.GPGSLeaderboard;
 import de.dbaelz.secludedness.manager.GPGSManager;
 
 public class CampaignFinishScreen extends AbstractScreen {
-	private LevelStatistic mLevelStatistic;
+	private MainGame mGame;
 	private TextureAtlas mAtlas;
 	private Skin mSkin;
 	private Table mTable;
 
-	public CampaignFinishScreen(MainGame game, LevelStatistic statistic) {
+	public CampaignFinishScreen(MainGame game) {
 		super(game);
-		mLevelStatistic = statistic;
+		mGame = game;
+		manageGPGS();
 	}
 
 	@Override
@@ -36,7 +38,7 @@ public class CampaignFinishScreen extends AbstractScreen {
 		Label finishedLabel = new Label("== CAMPAIGN FINISHED ==", mSkin);
 				
 		Label textLabel = new Label("You have successfully completed the campaign!", mSkin);
-		Label tempLabel = new Label("The cake is a lie. No fancy animations or credits here. ", mSkin);
+		Label tempLabel = new Label("Campaign score: " + mGame.getLevelManager().getCampaignScore(), mSkin);
 
 		TextButton returnMenuScreen = new TextButton("RETURN TO MENU", mSkin);
 		returnMenuScreen.addListener(new ClickListener() {
@@ -57,7 +59,7 @@ public class CampaignFinishScreen extends AbstractScreen {
 		mTable.row();
 		mTable.add(tempLabel);
 		mTable.row();
-		mTable.add(returnMenuScreen).size(180, 30).uniform().spaceBottom(10);
+		mTable.add(returnMenuScreen).size(180, 30).uniform().spaceBottom(30);
 	}
 	
 	@Override
@@ -65,5 +67,13 @@ public class CampaignFinishScreen extends AbstractScreen {
 		super.hide();
 		mAtlas.dispose();
 		mSkin.dispose();
+	}
+	
+	private void manageGPGS() {
+		GPGSManager manager = mGame.getGPGSManager();
+		
+		manager.unlockAchievement(GPGSAchievement.FINISH_CAMPAIGN.getAchievementID());
+		
+		manager.submitScore(GPGSLeaderboard.CAMPAIGN_SCORE.getLeaderboardID(), mGame.getLevelManager().getCampaignScore());
 	}
 }

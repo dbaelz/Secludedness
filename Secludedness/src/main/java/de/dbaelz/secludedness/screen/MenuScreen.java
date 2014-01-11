@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import de.dbaelz.secludedness.MainGame;
+import de.dbaelz.secludedness.manager.GPGSAchievement;
 import de.dbaelz.secludedness.manager.GPGSLeaderboard;
 import de.dbaelz.secludedness.manager.GPGSManager;
 
@@ -41,7 +42,7 @@ public class MenuScreen extends AbstractScreen {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				super.touchUp(event, x, y, pointer, button);				
-				mGame.setScreen(new LevelScreen(mGame, false));
+				mGame.setScreen(new LevelScreen(mGame, false, mGame.getLevelManager().getRandomLevel()));
 			}
 		});
 
@@ -50,7 +51,8 @@ public class MenuScreen extends AbstractScreen {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				super.touchUp(event, x, y, pointer, button);
-				mGame.setScreen(new LevelScreen(mGame, true));
+				mGame.getGPGSManager().unlockAchievement(GPGSAchievement.BEGIN_CAMPAIGN.getAchievementID());
+				mGame.setScreen(new LevelScreen(mGame, true, mGame.getLevelManager().getCurrentCampaignLevel()));
 			}
 		});
 		

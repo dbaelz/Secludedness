@@ -12,8 +12,10 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 
 import de.dbaelz.secludedness.MainGame;
 import de.dbaelz.secludedness.level.Level;
+import de.dbaelz.secludedness.level.LevelStatistic;
 import de.dbaelz.secludedness.level.Player;
 import de.dbaelz.secludedness.manager.InputManager;
+import de.dbaelz.secludedness.manager.LevelManager;
 
 public class LevelScreen extends AbstractScreen {
 	private MainGame mGame; 
@@ -30,14 +32,6 @@ public class LevelScreen extends AbstractScreen {
 
 	private boolean mUsePolling;
 	private boolean mIsCampaign;
-	
-	public LevelScreen(MainGame game, boolean isCampaign) {
-		super(game);		
-		mGame = game;
-		mIsCampaign = isCampaign;
-		mLevel = new Level(mGame.getLevelManager().getLevelFilename(isCampaign));
-		mPlayer = new Player(mLevel.getPlayerCellX(), mLevel.getPlayerCellY(), mLevel.getPlayerStartHealth());
-	}
 	
 	public LevelScreen(MainGame game, boolean isCampaign, String levelFilename) {
 		super(game);		
@@ -110,7 +104,7 @@ public class LevelScreen extends AbstractScreen {
 					
 		if (mPlayer.getHealth() == 0) {
 			if (mIsCampaign) {
-				mGame.setScreen(new LevelScreen(mGame, true, mLevel.getLevelStatistic().getLevelFilename()));
+				mGame.setScreen(new LevelScreen(mGame, true, mLevel.getMapName()));
 			} else {
 				showResultScreen();
 			}
@@ -118,15 +112,19 @@ public class LevelScreen extends AbstractScreen {
 		
 		if (mLevel.isFinished()) {
 			if (mIsCampaign) {
-				if (mGame.getLevelManager().isCampaignFinished()) {
-					mGame.getLevelManager().restartCampaign();
-					
-					mLevel.getLevelStatistic().setHealth(mPlayer.getHealth());
-					mGame.setScreen(new CampaignFinishScreen(mGame, mLevel.getLevelStatistic()));
-				} else {
-					mGame.setScreen(new LevelScreen(mGame, true));	
-				}
+				LevelManager levelManager = mGame.getLevelManager();
+							
+				LevelStatistic statistic = mLevel.getLevelStatistic();
+				statistic.setHealth(mPlayer.getHealth());				
+				int score = statistic.getMoves() + statistic.getTeleports() + (Math.abs(statistic.getHealth()-statistic.getStartHealth())); 
+						
+				levelManager.handleCampaignLevelFinished(score);
 				
+				if (levelManager.isCampaignFinished()) {					
+					mGame.setScreen(new CampaignFinishScreen(mGame));
+				} else {
+					mGame.setScreen(new LevelScreen(mGame, true, levelManager.getCurrentCampaignLevel()));	
+				}				
 			} else {
 				showResultScreen();
 			}

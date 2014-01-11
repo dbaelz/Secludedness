@@ -15,6 +15,7 @@ import com.badlogic.gdx.utils.GdxRuntimeException;
 public class Level {
 	private final int TILE_SIZE = 64;
 	
+	private String mMapName;
 	private TiledMap mMap;
 	private TiledMapTileLayer mForegroundLayer = null;
 	private TiledMapTileLayer mPortalLayer = null;
@@ -27,9 +28,10 @@ public class Level {
 	private LevelStatistic mLevelStatistic;
 	
 	public Level(String mapName) {
-		loadMap(mapName);
+		mMapName = mapName;
+		loadMap(mMapName);
 		readMap();
-		mLevelStatistic = new LevelStatistic(getPlayerStartHealth(), mapName);
+		mLevelStatistic = new LevelStatistic(getPlayerStartHealth(), mMapName);
 	}
 	
 	private void loadMap(String mapName) {
@@ -161,6 +163,10 @@ public class Level {
 
 	public void setFinished(boolean levelFinished) {
 		this.mLevelFinished = levelFinished;
+	}
+	
+	public String getMapName() {
+		return mMapName;
 	}
 	
 	public LevelStatistic getLevelStatistic() {
