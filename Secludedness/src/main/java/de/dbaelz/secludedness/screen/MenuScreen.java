@@ -27,6 +27,9 @@ public class MenuScreen extends AbstractScreen {
 	@Override
 	public void show() {
 		super.show();
+
+		final GPGSManager playManager = mGame.getGPGSManager();
+		playManager.signIn();
 		
 		mAtlas = new TextureAtlas(Gdx.files.internal("ui/uiskin.atlas"));
 		FileHandle skinFile = Gdx.files.internal( "ui/uiskin.json" );
@@ -34,8 +37,6 @@ public class MenuScreen extends AbstractScreen {
 
 		final int buttonWidth = 250;
 		final int buttonHeight = 30;
-		
-		final GPGSManager playManager = mGame.getGPGSManager();
 		
 		final TextButton playRandomLevel = new TextButton("PLAY RANDOM LEVEL", mSkin);
 		playRandomLevel.addListener(new ClickListener() {
@@ -55,17 +56,7 @@ public class MenuScreen extends AbstractScreen {
 				mGame.setScreen(new LevelScreen(mGame, true, mGame.getLevelManager().getCurrentCampaignLevel()));
 			}
 		});
-		
-		final TextButton gpgsSignIn = new TextButton("GOOGLE PLAY GAMES LOGIN", mSkin);
-		gpgsSignIn.addListener(new ClickListener() {
-			@Override
-			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-				super.touchUp(event, x, y, pointer, button);				
-				playManager.signIn();
-				mTable.removeActor(gpgsSignIn);			
-			}
-		});
-		
+				
 		final TextButton showAchievements = new TextButton("SHOW ACHIEVEMENTS", mSkin);
 		showAchievements.addListener(new ClickListener() {
 			@Override
@@ -89,6 +80,7 @@ public class MenuScreen extends AbstractScreen {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				super.touchUp(event, x, y, pointer, button);
+				hide();
 				Gdx.app.exit();				 
 			}
 		});
@@ -101,9 +93,7 @@ public class MenuScreen extends AbstractScreen {
 		mTable.add(playCampaign).size(buttonWidth, buttonHeight).uniform().spaceTop(10);
 		mTable.row();
 		
-		mTable.add(gpgsSignIn).size(buttonWidth, buttonHeight).uniform().spaceTop(30);
-		mTable.row();
-		mTable.add(showAchievements).size(buttonWidth, buttonHeight).uniform().spaceTop(10);
+		mTable.add(showAchievements).size(buttonWidth, buttonHeight).uniform().spaceTop(30);
 		mTable.row();
 		mTable.add(showLeaderboard).size(buttonWidth, buttonHeight).uniform().spaceTop(10);
 				

@@ -48,4 +48,11 @@ public class DesktopGPGSManager implements GPGSManager {
 		
 	}
 
+	@Override
+	public void saveCampaignToCloud() {
+	}
+
+	@Override
+	public void loadCampaignFromCloud() {
+	}
 }

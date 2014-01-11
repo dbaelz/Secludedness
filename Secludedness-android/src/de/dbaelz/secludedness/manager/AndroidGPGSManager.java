@@ -53,4 +53,11 @@ public class AndroidGPGSManager implements GPGSManager {
 		mActivity.startActivityForResult(mGameHelper.getGamesClient().getLeaderboardIntent(leaderboardID), 11);
 	}
 
+	@Override
+	public void saveCampaignToCloud() {
+	}
+
+	@Override
+	public void loadCampaignFromCloud() {
+	}
 }

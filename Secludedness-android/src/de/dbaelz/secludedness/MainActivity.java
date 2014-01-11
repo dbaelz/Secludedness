@@ -19,6 +19,8 @@ public class MainActivity extends AndroidApplication implements GameHelperListen
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);        
         mGameHelper = new GameHelper(this);
+        mGameHelper.setup(this, GameHelper.CLIENT_GAMES | GameHelper.CLIENT_APPSTATE);
+
         mGPGSManager = new AndroidGPGSManager(mGameHelper, this);
         
         AndroidApplicationConfiguration cfg = new AndroidApplicationConfiguration();
@@ -27,7 +29,6 @@ public class MainActivity extends AndroidApplication implements GameHelperListen
 		cfg.useAccelerometer = true;
         
 		initialize(new MainGame(mGPGSManager), cfg);
-        mGameHelper.setup(this);
     }
     
     @Override
@@ -39,6 +40,7 @@ public class MainActivity extends AndroidApplication implements GameHelperListen
     @Override
     protected void onStop() {
     	super.onStop();
+        mGPGSManager.saveCampaignToCloud();
     	mGameHelper.onStop();
     }
     
