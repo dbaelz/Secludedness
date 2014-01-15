@@ -97,6 +97,11 @@ public class AndroidGPGSManager implements GPGSManager, OnStateLoadedListener, C
 		int serverCampaignLevel = serverBuffer.getInt();
 
 		LevelManager levelManager = mActivity.getGame().getLevelManager();
+		if (levelManager.getCurrentCampaignLevel() > localCampaignLevel
+				|| levelManager.getCurrentCampaignLevel() > serverCampaignLevel) {
+			return;
+		}
+		
 		if (localCampaignLevel >= serverCampaignLevel) {
 			levelManager.setCurrentCampaignLevel(localCampaignLevel);
 			levelManager.setCampaignScore(localBuffer.getInt());

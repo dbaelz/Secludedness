@@ -25,6 +25,7 @@ public class Level {
 	private int[] mPlayerCell; 
 	private int mPlayerStartHealth;
 	private boolean mLevelFinished;
+	private boolean mLevelAborted;
 	private LevelStatistic mLevelStatistic;
 	
 	public Level(String mapName) {
@@ -163,6 +164,14 @@ public class Level {
 
 	public void setFinished(boolean levelFinished) {
 		this.mLevelFinished = levelFinished;
+	}
+	
+	public boolean isAborted() {
+		return mLevelAborted;
+	}
+
+	public void setAborted(boolean levelAborted) {
+		this.mLevelAborted = levelAborted;
 	}
 	
 	public String getMapName() {

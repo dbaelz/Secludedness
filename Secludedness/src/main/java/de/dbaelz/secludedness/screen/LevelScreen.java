@@ -111,7 +111,11 @@ public class LevelScreen extends AbstractScreen {
 		super.dispose();
 	}
 
-	private void doGameLogic(float delta){
+	private void doGameLogic(float delta) {
+		if (mLevel.isAborted()) {
+			mGame.setScreen(new MenuScreen(mGame));
+		}
+		
 		if (mUsePolling && !mLevel.isFinished()) {
 			mInputManager.pollPlayerInput(delta, mLevel, mPlayer);	
 		}

@@ -23,6 +23,7 @@ public class InputManager implements InputProcessor {
 		mGame = game;
 		mLevel = level;
 		mPlayer = player;
+		Gdx.input.setCatchBackKey(true);
 	}
 
 	@Override
@@ -32,6 +33,10 @@ public class InputManager implements InputProcessor {
 
 	@Override
 	public boolean keyUp(int keycode) {
+		if (keycode == Keys.BACK || keycode == Keys.ESCAPE) {
+			mLevel.setAborted(true);
+		}
+		
 		if (!mLevel.isFinished()) {
 			int xPosition = mPlayer.getPositionX();
 			int yPosition = mPlayer.getPositionY();

@@ -44,16 +44,17 @@ public class MainActivity extends AndroidApplication implements GameHelperListen
     	super.onStop();
     	mGameHelper.onStop();
     }
-    
+	
+	public MainGame getGame() {
+		return mGame;
+	}
+
 	@Override
 	public void onSignInFailed() {
 	}
 
 	@Override
 	public void onSignInSucceeded() {
-	}
-	
-	public MainGame getGame() {
-		return mGame;
+		mGPGSManager.loadCampaignFromCloud();
 	}
 }
