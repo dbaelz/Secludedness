@@ -11,8 +11,8 @@ public class Main {
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
 		cfg.title = "Secludedness";
 		cfg.useGL20 = true;
-		cfg.width = 800;
-		cfg.height = 600;
+		cfg.width = 1196;
+		cfg.height = 720;
 		
 		new LwjglApplication(new MainGame(new DesktopGPGSManager()), cfg);
 	}

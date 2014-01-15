@@ -50,4 +50,4 @@ android {
 
 License
 -------------
-Libgdx and Secludedness are licensed under the [Apache 2 License](LICENSE). The amazing [music](https://github.com/dbaelz/Secludedness/tree/master/Secludedness-android/assets/music/ozzed) is from [Ozzed](http://ozzed.net) and licensed under [Creative Commons BY-SA 3.0)](http://creativecommons.org/licenses/by-sa/3.0/).
+Libgdx and Secludedness are licensed under the [Apache 2 License](LICENSE). The amazing [music](https://github.com/dbaelz/Secludedness/tree/master/Secludedness-android/assets/music/ozzed) is from [Ozzed](http://ozzed.net) and licensed under [Creative Commons BY-SA 3.0](http://creativecommons.org/licenses/by-sa/3.0).

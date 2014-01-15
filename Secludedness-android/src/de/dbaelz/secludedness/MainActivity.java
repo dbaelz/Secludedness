@@ -29,8 +29,8 @@ public class MainActivity extends AndroidApplication implements GameHelperListen
 		cfg.useAccelerometer = true;
         
 		mGame = new MainGame(mGPGSManager);
-		initialize(mGame, cfg);
-        mGameHelper.setup(this, GameHelper.CLIENT_GAMES | GameHelper.CLIENT_APPSTATE);
+		mGameHelper.setup(this, GameHelper.CLIENT_GAMES | GameHelper.CLIENT_APPSTATE);
+		initialize(mGame, cfg);        
     }
     
     @Override
