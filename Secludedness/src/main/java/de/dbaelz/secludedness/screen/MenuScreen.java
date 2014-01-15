@@ -33,7 +33,6 @@ public class MenuScreen extends AbstractScreen {
 		
 		final GPGSManager playManager = mGame.getGPGSManager();		
 		playManager.signIn();
-		playManager.loadCampaignFromCloud();	
 		
 		final AudioManager audioManager = mGame.getAudioManager();
 		if (!audioManager.isMusicPlaying()){

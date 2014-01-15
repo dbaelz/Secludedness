@@ -2,13 +2,16 @@ package de.dbaelz.secludedness.manager;
 
 import java.nio.ByteBuffer;
 
+import android.os.Bundle;
+
 import com.google.android.gms.appstate.AppStateClient;
 import com.google.android.gms.appstate.OnStateLoadedListener;
+import com.google.android.gms.common.GooglePlayServicesClient.ConnectionCallbacks;
 import com.google.example.games.basegameutils.GameHelper;
 
 import de.dbaelz.secludedness.MainActivity;
 
-public class AndroidGPGSManager implements GPGSManager, OnStateLoadedListener {
+public class AndroidGPGSManager implements GPGSManager, OnStateLoadedListener, ConnectionCallbacks {
 	private final int STATE_KEY = 0;
 
 	private GameHelper mGameHelper;
@@ -36,42 +39,54 @@ public class AndroidGPGSManager implements GPGSManager, OnStateLoadedListener {
 
 	@Override
 	public void unlockAchievement(String achievementID) {
-		mGameHelper.getGamesClient().unlockAchievement(achievementID);
+		if (isSignedIn()) {
+			mGameHelper.getGamesClient().unlockAchievement(achievementID);	
+		}		
 	}
 
 	@Override
 	public void incrementAchievement(String achievementID, int steps) {
-		mGameHelper.getGamesClient().incrementAchievement(achievementID, steps);
+		if (isSignedIn()) {
+			mGameHelper.getGamesClient().incrementAchievement(achievementID, steps);
+		}
 	}
 
 	@Override
 	public void getAchievements() {
-		mActivity.startActivityForResult(mGameHelper.getGamesClient()
-				.getAchievementsIntent(), 10);
+		if (isSignedIn()) {
+		mActivity.startActivityForResult(mGameHelper.getGamesClient().getAchievementsIntent(), 10);
+		}
 	}
 
 	@Override
 	public void submitScore(String leaderboardID, int score) {
-		mGameHelper.getGamesClient().submitScore(leaderboardID, score);
+		if (isSignedIn()) {
+			mGameHelper.getGamesClient().submitScore(leaderboardID, score);
+		}
 	}
 
 	@Override
 	public void getLeaderboard(String leaderboardID) {
-		mActivity.startActivityForResult(mGameHelper.getGamesClient()
-				.getLeaderboardIntent(leaderboardID), 11);
+		if (isSignedIn()) {
+			mActivity.startActivityForResult(mGameHelper.getGamesClient().getLeaderboardIntent(leaderboardID), 11);
+		}
 	}
 
 	@Override
 	public void saveCampaignToCloud(int campaignLevel, int campaignScore) {
-		ByteBuffer buffer = ByteBuffer.allocate(9);
-		buffer.putInt(campaignLevel);
-		buffer.putInt(campaignScore);
-		mGameHelper.getAppStateClient().updateState(STATE_KEY, buffer.array());
+		if (isSignedIn()) {
+			ByteBuffer buffer = ByteBuffer.allocate(9);
+			buffer.putInt(campaignLevel);
+			buffer.putInt(campaignScore);
+			mGameHelper.getAppStateClient().updateState(STATE_KEY, buffer.array());
+		}
 	}
 
 	@Override
 	public void loadCampaignFromCloud() {
-		mGameHelper.getAppStateClient().loadState(this, STATE_KEY);
+		if (isSignedIn()) {
+			mGameHelper.getAppStateClient().loadState(this, STATE_KEY);
+		}
 	}
 
 	@Override
@@ -105,5 +120,14 @@ public class AndroidGPGSManager implements GPGSManager, OnStateLoadedListener {
 			levelManager.setCurrentCampaignLevel(0);
 			levelManager.setCampaignScore(0);
 		}
+	}
+
+	@Override
+	public void onConnected(Bundle bundle) {
+		loadCampaignFromCloud();
+	}
+
+	@Override
+	public void onDisconnected() {
 	}
 }
