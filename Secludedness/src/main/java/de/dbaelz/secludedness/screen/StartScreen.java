@@ -11,23 +11,25 @@ import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 import de.dbaelz.secludedness.MainGame;
+import de.dbaelz.secludedness.manager.AudioManager.MusicFile;
 
 public class StartScreen extends AbstractScreen {
-	private Image mStartImage;
-	private Texture mTexture;
+	private MainGame mGame;
 	
 	public StartScreen(MainGame game) {
-		super(game);		
+		super(game);
+		mGame = game;
 	}
 
 	@Override
 	public void show() {
 		super.show();
 		
-		mTexture = new Texture(Gdx.files.internal("data/logo.png"));
-		mStartImage = new Image(mTexture);
-		mStartImage.setFillParent(true);
-		mStartImage.getColor().a = 0f;
+		mGame.getAudioManager().playMusic(MusicFile.THE_FINAL_END, true);
+		
+		final Image logoImage = new Image(new Texture(Gdx.files.internal("images/startscreen.png")));
+		logoImage.setFillParent(true);
+		logoImage.getColor().a = 0f;
 		
 		Action changeScreen = new Action() {
 			@Override
@@ -36,8 +38,9 @@ public class StartScreen extends AbstractScreen {
 				return true;
 			}
 		};
-		mStartImage.addAction(sequence(fadeIn(1.5f), delay(1f), fadeOut(1.5f), changeScreen));		
-		mStage.addActor(mStartImage);
+		
+		logoImage.addAction(sequence(fadeIn(1.5f), delay(1.5f), fadeOut(1.5f), changeScreen));		
+		mStage.addActor(logoImage);		
 	}
 	
 	@Override

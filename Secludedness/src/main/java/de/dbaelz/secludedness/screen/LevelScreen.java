@@ -14,6 +14,7 @@ import de.dbaelz.secludedness.MainGame;
 import de.dbaelz.secludedness.level.Level;
 import de.dbaelz.secludedness.level.LevelStatistic;
 import de.dbaelz.secludedness.level.Player;
+import de.dbaelz.secludedness.manager.AudioManager.MusicFile;
 import de.dbaelz.secludedness.manager.InputManager;
 import de.dbaelz.secludedness.manager.LevelManager;
 
@@ -34,11 +35,19 @@ public class LevelScreen extends AbstractScreen {
 	private boolean mIsCampaign;
 	
 	public LevelScreen(MainGame game, boolean isCampaign, String levelFilename) {
+		this(game, isCampaign, levelFilename, true);
+	}
+	
+	public LevelScreen(MainGame game, boolean isCampaign, String levelFilename, boolean newMusic) {
 		super(game);		
 		mGame = game;
 		mIsCampaign = isCampaign;
 		mLevel = new Level(levelFilename);
 		mPlayer = new Player(mLevel.getPlayerCellX(), mLevel.getPlayerCellY(), mLevel.getPlayerStartHealth());
+		
+		if (newMusic) {
+			mGame.getAudioManager().playMusic(MusicFile.getRandomMusicFile(), true);
+		}
 	}
 
 	@Override
@@ -90,6 +99,11 @@ public class LevelScreen extends AbstractScreen {
 	}
 	
 	@Override
+	public void hide() {
+		super.hide();
+	}
+	
+	@Override
 	public void dispose() {
 		mMapRenderer.dispose();
 		mTexture.dispose();
@@ -104,7 +118,7 @@ public class LevelScreen extends AbstractScreen {
 					
 		if (mPlayer.getHealth() == 0) {
 			if (mIsCampaign) {
-				mGame.setScreen(new LevelScreen(mGame, true, mLevel.getMapName()));
+				mGame.setScreen(new LevelScreen(mGame, true, mLevel.getMapName(), false));
 			} else {
 				showResultScreen();
 			}

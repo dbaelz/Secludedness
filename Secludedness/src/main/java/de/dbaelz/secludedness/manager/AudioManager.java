@@ -30,17 +30,27 @@ public class AudioManager {
 	}
 	
 	public enum MusicFile {
-		// TODO: Add music files
-		TEMP("music/temp.ogg");
+		// Ozzed
+		BOKTIPSET_FRAAN_HELVETET("music/ozzed/boktipset_fraan_helvetet.ogg"),
+		HIGHWAY_SLAUGHTER("music/ozzed/highway_slaughter.ogg"),
+		SUPER_SECRET_TUNE("music/ozzed/super_secret_tune.ogg"),
+		THE_DAY_TIME_RAN_AWAY("music/ozzed/the_day_time_ran_away.ogg"),
+		THE_FINAL_END("music/ozzed/the_final_end.ogg"),
+		WORLD_NAP("music/ozzed/world_nap.ogg");
 		
 		private String mFilename;
-		
+		 
 		private MusicFile(String filename) {
 			mFilename = filename; 
 		}
 		
 		private String getFilename() {
 			return mFilename;
+		}
+		
+		public static MusicFile getRandomMusicFile() {
+			int random = (int) (Math.random() * (AudioManager.MusicFile.values().length - 0) + 0);
+			return values()[random]; 
 		}
 	}
 	
@@ -74,10 +84,15 @@ public class AudioManager {
 			mTrapSound.play();
 		}
 	}
-	public void playMusic(MusicFile file) {
+	
+	public void playMusic(MusicFile file, boolean isLooping) {
 		if (mMusicActivated) {
+			if (mMusic != null) {
+				stopMusic();
+			}
 			mMusic = Gdx.audio.newMusic(Gdx.files.internal(file.getFilename()));
-			mMusic.play();
+			mMusic.setLooping(isLooping);
+			mMusic.play();			
 		}
 	}
 	
@@ -87,11 +102,23 @@ public class AudioManager {
 		}
 	}
 	
-	public void stopMusic() {
-		if (mMusic != null && mMusic.isPlaying()) {
-			mMusic.stop();
-			mMusic.dispose();
+	public void resumeMusic() {
+		if (mMusicActivated && mMusic != null && !mMusic.isPlaying()) {
+			mMusic.play();
 		}
+	}
+	
+	public void stopMusic() {
+		if (mMusic != null) {
+			mMusic.stop();
+		}
+	}
+	
+	public boolean isMusicPlaying() {
+		if (mMusic != null) {
+			return mMusic.isPlaying();
+		}
+		return false;
 	}
 	
 	public boolean isSoundActivated() {
@@ -109,7 +136,9 @@ public class AudioManager {
 	public void setMusicActivated(boolean activated) {
 		mMusicActivated = activated;
 		if (!activated) {
-			stopMusic();
+			pauseMusic();
+		} else {
+			mMusic.play();
 		}
 	}
 	

@@ -19,11 +19,10 @@ public class MainGame extends Game {
 	
 	@Override
 	public void create() {
-		setScreen(new StartScreen(this));
 		mAudioManager = new AudioManager();
 		mLevelManager = new LevelManager();
 		
-		// TODO: Start intro music
+		setScreen(new StartScreen(this));
 	}
 	
 	@Override

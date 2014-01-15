@@ -10,10 +10,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import de.dbaelz.secludedness.MainGame;
+import de.dbaelz.secludedness.manager.AudioManager;
 import de.dbaelz.secludedness.manager.GPGSAchievement;
 import de.dbaelz.secludedness.manager.GPGSLeaderboard;
 import de.dbaelz.secludedness.manager.GPGSManager;
 import de.dbaelz.secludedness.manager.LevelManager;
+import de.dbaelz.secludedness.manager.AudioManager.MusicFile;
 
 
 public class MenuScreen extends AbstractScreen {
@@ -28,11 +30,16 @@ public class MenuScreen extends AbstractScreen {
 	@Override
 	public void show() {
 		super.show();
-
-		final GPGSManager playManager = mGame.getGPGSManager();
-		playManager.signIn();
-		playManager.loadCampaignFromCloud();
 		
+		final GPGSManager playManager = mGame.getGPGSManager();		
+		playManager.signIn();
+		playManager.loadCampaignFromCloud();	
+		
+		final AudioManager audioManager = mGame.getAudioManager();
+		if (!audioManager.isMusicPlaying()){
+			audioManager.playMusic(MusicFile.THE_FINAL_END, true);			
+		}
+
 		mAtlas = new TextureAtlas(Gdx.files.internal("ui/uiskin.atlas"));
 		FileHandle skinFile = Gdx.files.internal( "ui/uiskin.json" );
 		mSkin = new Skin(skinFile);
@@ -44,7 +51,9 @@ public class MenuScreen extends AbstractScreen {
 		playRandomLevel.addListener(new ClickListener() {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-				super.touchUp(event, x, y, pointer, button);				
+				super.touchUp(event, x, y, pointer, button);
+				
+				audioManager.stopMusic();
 				mGame.setScreen(new LevelScreen(mGame, false, mGame.getLevelManager().getRandomLevel()));
 			}
 		});
@@ -54,6 +63,8 @@ public class MenuScreen extends AbstractScreen {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				super.touchUp(event, x, y, pointer, button);
+				
+				audioManager.stopMusic();
 				mGame.getGPGSManager().unlockAchievement(GPGSAchievement.BEGIN_CAMPAIGN.getAchievementID());
 				if (mGame.getLevelManager().isCampaignFinished()) {
 					mGame.getLevelManager().restartCampaign();
@@ -95,6 +106,8 @@ public class MenuScreen extends AbstractScreen {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				super.touchUp(event, x, y, pointer, button);
+				
+				audioManager.stopMusic();
 				LevelManager levelManager = mGame.getLevelManager();
 				if (levelManager.isCampaignFinished()) {
 					levelManager.restartCampaign();
