@@ -10,7 +10,6 @@ public class Main {
 	public static void main(String[] args) {
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
 		cfg.title = "Secludedness";
-		cfg.useGL20 = true;
 		cfg.width = 1196;
 		cfg.height = 720;
 		

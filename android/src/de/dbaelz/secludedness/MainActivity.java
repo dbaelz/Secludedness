@@ -24,7 +24,6 @@ public class MainActivity extends AndroidApplication implements GameHelperListen
         mGPGSManager = new AndroidGPGSManager(mGameHelper, this);
         
         AndroidApplicationConfiguration cfg = new AndroidApplicationConfiguration();
-		cfg.useGL20 = true;
 		cfg.useWakelock = true;
 		cfg.useAccelerometer = true;
         
