@@ -1,61 +1,87 @@
 buildscript {
-    repositories { mavenCentral() }
-    dependencies { classpath 'com.android.tools.build:gradle:0.5.+' }
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+    dependencies {
+        classpath 'de.richsource.gradle.plugins:gwt-gradle-plugin:0.5'
+        classpath 'com.android.tools.build:gradle:0.12.+'
+    }
 }
 
-allprojects {   
-    version = "1.0"
-    ext.appName = "mygame"
-    ext.gdxVersion = "0.9.9"
-    
+allprojects {
+    apply plugin: "eclipse"
+    apply plugin: "idea"
+
+    version = '1.0'
+    ext {
+        appName = 'Secludedness'
+        gdxVersion = '0.9.9'
+        roboVMVersion = '0.0.14'
+    }
+
     repositories {
         mavenCentral()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
-        mavenLocal();
+        maven { url "https://oss.sonatype.org/content/repositories/releases/" }
     }
 }
 
-subprojects {
-    apply plugin: "eclipse"
-    apply plugin: "idea"
-}
-
-project(":Secludedness") {
+project(":desktop") {
     apply plugin: "java"
-    
-    dependencies {
-        compile "com.badlogicgames.gdx:gdx:$gdxVersion"
-    }
-}
 
-project(":Secludedness-desktop") {
-    apply plugin: "java"
-    apply plugin: "application"
-    
+
     dependencies {
-        compile project(":Secludedness")
+        compile project(":core")
         compile "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
     }
 }
 
-project(":Secludedness-android") {
+project(":android") {
     apply plugin: "android"
 
     configurations { natives }
 
     dependencies {
-        compile project(":Secludedness")
-        compile "com.badlogicgames.gdx:gdx-backend-android:$gdxVersion"        
+        compile project(":core")
+        compile "com.badlogicgames.gdx:gdx-backend-android:$gdxVersion"
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi"
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi-v7a"
-        compile 'com.android.support:appcompat-v7:+'
+        natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-x86"
+        compile 'com.android.support:appcompat-v7:20.0.0'
         compile 'com.google.android.gms:play-services:4.0.30'
     }
 
     // Signing the APK with the Secludedness.signing property and external config files
     if (project.hasProperty("Secludedness.signing")
-        && new File(project.property("Secludedness.signing") + "/Secludedness.gradle").exists()) {
+            && new File(project.property("Secludedness.signing") + "/Secludedness.gradle").exists()) {
         apply from: project.property("Secludedness.signing") + "/Secludedness.gradle";
     }
+}
+
+project(":html") {
+    apply plugin: "gwt"
+    apply plugin: "war"
+
+
+    dependencies {
+        compile project(":core")
+        compile "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion"
+        compile "com.badlogicgames.gdx:gdx:$gdxVersion:sources"
+        compile "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion:sources"
+    }
+}
+
+project(":core") {
+    apply plugin: "java"
+
+
+    dependencies {
+        compile "com.badlogicgames.gdx:gdx:$gdxVersion"
+    }
+}
+
+tasks.eclipse.doLast {
+    delete ".project"
 }

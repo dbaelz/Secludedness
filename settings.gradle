@@ -1,1 +1,1 @@
-include "Secludedness", "Secludedness-desktop", "Secludedness-android"
+include 'desktop', 'android', 'html', 'core'
