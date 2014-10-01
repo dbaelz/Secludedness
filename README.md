@@ -8,13 +8,11 @@ Secludedness uses [Semantic Versioning 2.0.0](http://semver.org/spec/v2.0.0.html
 
 Build
 -------------
-Secludedness uses Gradle with the [libgdx-gradle-template](https://github.com/libgdx/libgdx-gradle-template) as build tool. Currently only Secludedness (core project), Secludedness-desktop and Secludedness-android are built. For Secludedness-html (with GWT) see the [GWT website](http://www.gwtproject.org/) and the [libgdx documentation](http://libgdx.badlogicgames.com/documentation.html).
-
-The projects can be build with the integrated Gradle Wrapper (Gradle 1.8). See [libgdx-gradle-template](https://github.com/libgdx/libgdx-gradle-template) for usage of the wrapper.
+The projects can be build with the integrated Gradle wrapper. See [libgdx project wiki](https://github.com/libgdx/libgdx/wiki/Gradle-on-the-Commandline) for usage of the wrapper.
 
 Signing
 -------------
-To sign your Android app with gradle use the property [Secludedness.signing](https://github.com/dbaelz/Secludedness/blob/master/build.gradle#L54) and external config files for the keystore informations. [Tim Roes](https://github.com/timroes) wrote a very informative blog post about [handling signing configs](https://www.timroes.de/2013/09/22/handling-signing-configs-with-gradle/) from which the example below was derived.
+To sign your Android app with gradle use the property [Secludedness.signing](https://github.com/dbaelz/Secludedness/blob/master/build.gradle#L57) and external config files for the keystore informations. [Tim Roes](https://github.com/timroes) wrote a very informative blog post about [handling signing configs](https://www.timroes.de/2013/09/22/handling-signing-configs-with-gradle/) from which the example below was derived.
 
 Note that property _Secludedness.signing_ has to point to the __folder__ of your keystores and not to the filename of the keystore file!
 
